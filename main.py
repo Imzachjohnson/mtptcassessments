@@ -87,6 +87,6 @@ def all_data_request(api_key):
     return built_assessment
 
 
-@app.get("/geojson/{api_key}")
+@app.get("/{api_key}")
 def read_root(api_key):
     return convertogeojson(all_data_request(api_key))

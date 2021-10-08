@@ -8,7 +8,6 @@ import geojson
 
 
 from datetime import datetime
-from uuid import UUID
 from typing import List, Any
 import json
 

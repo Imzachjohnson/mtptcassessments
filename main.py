@@ -54,7 +54,7 @@ def convertogeojson(received_assessments: AssessmentList):
         properties_temp = {
             "id": assessment.id,
         }
-        if assessment.geolocation[1] and assessment.geolocation[0]:
+        if assessment.geolocation[0] and assessment.geolocation[1]:
             image: str = ""
             try:
                 for index, attachment in enumerate(assessment.attachments):
@@ -66,7 +66,7 @@ def convertogeojson(received_assessments: AssessmentList):
                 image = "None"
 
             my_point = Point(
-                (float(assessment.geolocation[0]), float(assessment.geolocation[1]))
+                (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
             )
             my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
             data.append(my_feature)

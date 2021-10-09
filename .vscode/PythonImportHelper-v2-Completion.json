@@ -1,0 +1,206 @@
+[
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "geojson",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "geojson",
+        "description": "geojson",
+        "detail": "geojson",
+        "documentation": {}
+    },
+    {
+        "label": "MultiPoint",
+        "importPath": "geojson",
+        "description": "geojson",
+        "isExtraImport": true,
+        "detail": "geojson",
+        "documentation": {}
+    },
+    {
+        "label": "Feature",
+        "importPath": "geojson",
+        "description": "geojson",
+        "isExtraImport": true,
+        "detail": "geojson",
+        "documentation": {}
+    },
+    {
+        "label": "Point",
+        "importPath": "geojson",
+        "description": "geojson",
+        "isExtraImport": true,
+        "detail": "geojson",
+        "documentation": {}
+    },
+    {
+        "label": "FeatureCollection",
+        "importPath": "geojson",
+        "description": "geojson",
+        "isExtraImport": true,
+        "detail": "geojson",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Attachment",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass Assessment(BaseModel):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "Assessment",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    tags: List[Any] = None\n    notes: List[Any] = None\n    submitted_by: str = None\nclass AssessmentList(BaseModel):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "AssessmentList",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: List[Assessment]\napp = FastAPI()\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "convertogeojson",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            try:\n                for index, attachment in enumerate(assessment.attachments):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "all_data_request",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def all_data_request(api_key):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID, headers={\"Authorization\": \"Token \" + api_key}\n    )\n    response = r.json()\n    built_assessment = AssessmentList(assessments=response)\n    return built_assessment\n@app.get(\"/{api_key}\")\ndef read_root(api_key):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def read_root(api_key):\n    return convertogeojson(all_data_request(api_key))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "API_URL",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "API_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "FORM_ID",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "FORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            try:",
+        "detail": "main",
+        "documentation": {}
+    }
+]

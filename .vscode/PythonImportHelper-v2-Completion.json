@@ -136,7 +136,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    tags: List[Any] = None\n    notes: List[Any] = None\n    submitted_by: str = None\nclass AssessmentList(BaseModel):",
+        "peekOfCode": "class Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    tags: List[Any] = None\n    notes: List[Any] = None\n    submitted_by: str = None\n    principal_photo: str = Field(",
         "detail": "main",
         "documentation": {}
     },
@@ -145,7 +145,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: List[Assessment]\napp = FastAPI()\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,",
+        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]\napp = FastAPI()\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,",
         "detail": "main",
         "documentation": {}
     },
@@ -154,7 +154,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            try:\n                for index, attachment in enumerate(assessment.attachments):",
+        "peekOfCode": "def convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            all_images = []\n            try:",
         "detail": "main",
         "documentation": {}
     },
@@ -199,7 +199,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            try:",
+        "peekOfCode": "FORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            all_images = []",
         "detail": "main",
         "documentation": {}
     }

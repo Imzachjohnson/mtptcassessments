@@ -32,10 +32,13 @@ class Assessment(BaseModel):
     tags: List[Any] = None
     notes: List[Any] = None
     submitted_by: str = None
+    principal_photo: str = Field(
+        None, alias="D/group_idencontact/Photo_de_la_fa_ade_principale"
+    )
 
 
 class AssessmentList(BaseModel):
-    assessments: List[Assessment]
+    assessments: Optional[List[Assessment]]
 
 
 app = FastAPI()
@@ -54,13 +57,21 @@ def convertogeojson(received_assessments: AssessmentList):
         properties_temp = {
             "id": assessment.id,
         }
+
         if assessment.geolocation[0] and assessment.geolocation[1]:
             image: str = ""
+            all_images = []
             try:
-                for index, attachment in enumerate(assessment.attachments):
-                    properties_temp.update(
-                        {f"image{str(index)}": attachment.download_url}
-                    )
+                for attachment in assessment.attachments:
+                    all_images.append(attachment.download_url)
+
+                for image in all_images:
+                    if assessment.principal_photo in image:
+                        all_images.remove(image)
+                        all_images.insert(0, image)
+
+                for index, image in enumerate(all_images):
+                    properties_temp.update({f"image{str(index)}": image})
             except Exception as e:
                 print(e)
                 image = "None"

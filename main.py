@@ -155,15 +155,18 @@ def conversingletogeojson(assessment: Assessment):
 
 
 def all_data_request(api_key):
-    request_data = {"Authorization": "Token " + api_key}
-    r = requests.get(
-        url=API_URL + FORM_ID,
-        headers={"Authorization": "Token " + api_key},
-        timeout=800,
-    )
-    response = r.json()
-    built_assessment = AssessmentList(assessments=response)
-    return built_assessment
+    try:
+        request_data = {"Authorization": "Token " + api_key}
+        r = requests.get(
+            url=API_URL + FORM_ID,
+            headers={"Authorization": "Token " + api_key},
+            timeout=800,
+        )
+        response = r.json()
+        built_assessment = AssessmentList(assessments=response)
+        return built_assessment
+    except Exception as ex:
+        return {"error:": ex}
 
 
 def single_assessment_request(api_key, assessment):
@@ -180,7 +183,7 @@ def single_assessment_request(api_key, assessment):
 
 
 @app.get("/{api_key}")
-def read_root(api_key):
+async def read_root(api_key):
     return convertogeojson(all_data_request(api_key))
 
 

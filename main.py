@@ -131,6 +131,11 @@ def conversingletogeojson(assessment: Assessment):
                     1,
                     f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
                 )
+            else:
+                all_images.insert(
+                    1,
+                    f"None",
+                )
 
             for index, image in enumerate(all_images):
                 properties_temp.update({f"image{str(index)}": image})

@@ -181,7 +181,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def all_data_request(api_key):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID, headers={\"Authorization\": \"Token \" + api_key}\n    )\n    response = r.json()\n    built_assessment = AssessmentList(assessments=response)\n    return built_assessment\ndef single_assessment_request(api_key, assessment):\n    request_data = {\"Authorization\": \"Token \" + api_key}",
+        "peekOfCode": "def all_data_request(api_key):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID,\n        headers={\"Authorization\": \"Token \" + api_key},\n        timeout=800,\n    )\n    response = r.json()\n    built_assessment = AssessmentList(assessments=response)\n    return built_assessment",
         "detail": "main",
         "documentation": {}
     },

@@ -181,7 +181,7 @@ def single_assessment_request(api_key, assessment):
 
 
 @app.get("/{api_key}")
-async def read_root(api_key):
+def read_root(api_key):
     return convertogeojson(all_data_request(api_key))
 
 

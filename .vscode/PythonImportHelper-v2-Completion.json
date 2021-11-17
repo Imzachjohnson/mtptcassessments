@@ -195,6 +195,15 @@
         "documentation": {}
     },
     {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def read_root(api_key):\n    return convertogeojson(all_data_request(api_key))\n@app.get(\"/{api_key}/{assessment}\")\nasync def single(api_key, assessment):\n    return conversingletogeojson(single_assessment_request(api_key, assessment))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "app",
         "kind": 5,
         "importPath": "main",

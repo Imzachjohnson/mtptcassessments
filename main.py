@@ -23,6 +23,12 @@ class Attachment(BaseModel):
     xform: int
 
 
+class EnqDetailleGroupNiveau(BaseModel):
+    photo: str = Field(
+        None, alias="enq_detaille/group_niveau/group_fo3pt80/Photo_du_plan_du_batiment"
+    )
+
+
 class Assessment(BaseModel):
     id: str = Field(None, alias="_id")
     username: str = None
@@ -32,9 +38,15 @@ class Assessment(BaseModel):
     tags: List[Any] = None
     notes: List[Any] = None
     submitted_by: str = None
+    plan_photo: List[EnqDetailleGroupNiveau] = Field(
+        None, alias="enq_detaille/group_niveau"
+    )
     principal_photo: str = Field(
         None, alias="D/group_idencontact/Photo_de_la_fa_ade_principale"
     )
+
+    def build(data):
+        return Assessment(**data)
 
 
 class AssessmentList(BaseModel):
@@ -45,6 +57,8 @@ app = FastAPI()
 
 
 API_URL = "https://kc.humanitarianresponse.info/api/v1/data/"
+
+MEDIA_API_URL = "https://kc.humanitarianresponse.info/api/v1/media/"
 
 FORM_ID = "894190"
 
@@ -63,12 +77,18 @@ def convertogeojson(received_assessments: AssessmentList):
             all_images = []
             try:
                 for attachment in assessment.attachments:
-                    all_images.append(attachment.download_url)
+                    all_images.append(attachment.download_large_url)
 
                 for image in all_images:
                     if assessment.principal_photo in image:
                         all_images.remove(image)
                         all_images.insert(0, image)
+
+                if assessment.plan_photo:
+                    all_images.insert(
+                        1,
+                        f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
+                    )
 
                 for index, image in enumerate(all_images):
                     properties_temp.update({f"image{str(index)}": image})
@@ -87,6 +107,48 @@ def convertogeojson(received_assessments: AssessmentList):
     return feature_collection
 
 
+def conversingletogeojson(assessment: Assessment):
+    data = []
+
+    properties_temp = {
+        "id": assessment.id,
+    }
+
+    if assessment.geolocation[0] and assessment.geolocation[1]:
+        image: str = ""
+        all_images = []
+        try:
+            for attachment in assessment.attachments:
+                all_images.append(attachment.download_large_url)
+
+            for image in all_images:
+                if assessment.principal_photo in image:
+                    all_images.remove(image)
+                    all_images.insert(0, image)
+
+            if assessment.plan_photo:
+                all_images.insert(
+                    1,
+                    f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
+                )
+
+            for index, image in enumerate(all_images):
+                properties_temp.update({f"image{str(index)}": image})
+        except Exception as e:
+            print(e)
+            image = "None"
+
+        my_point = Point(
+            (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
+        )
+        my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
+        data.append(my_feature)
+
+    feature_collection = FeatureCollection(data)
+
+    return feature_collection
+
+
 def all_data_request(api_key):
     request_data = {"Authorization": "Token " + api_key}
     r = requests.get(
@@ -97,6 +159,25 @@ def all_data_request(api_key):
     return built_assessment
 
 
+def single_assessment_request(api_key, assessment):
+    request_data = {"Authorization": "Token " + api_key}
+    r = requests.get(
+        url=API_URL + FORM_ID + "/" + assessment,
+        headers={"Authorization": "Token " + api_key},
+    )
+
+    response = r.json()
+    built_assessment = Assessment.build(r.json())
+
+    return built_assessment
+
+
 @app.get("/{api_key}")
-def read_root(api_key):
+async def read_root(api_key):
     return convertogeojson(all_data_request(api_key))
+
+
+@app.get("/{api_key}/{assessment}")
+async def single(api_key, assessment):
+
+    return conversingletogeojson(single_assessment_request(api_key, assessment))

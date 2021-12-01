@@ -181,7 +181,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def all_data_request(api_key):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID,\n        headers={\"Authorization\": \"Token \" + api_key},\n        timeout=800,\n    )\n    response = r.json()\n    built_assessment = AssessmentList(assessments=response)\n    return built_assessment",
+        "peekOfCode": "def all_data_request(api_key, start, limit):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID + f\"?start={start}&limit={limit}\",\n        headers={\"Authorization\": \"Token \" + api_key},\n        timeout=800,\n    )\n    response = r.json()\n    built_assessment = AssessmentList(assessments=response)\n    return built_assessment",
         "detail": "main",
         "documentation": {}
     },
@@ -191,15 +191,6 @@
         "importPath": "main",
         "description": "main",
         "peekOfCode": "def single_assessment_request(api_key, assessment):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID + \"/\" + assessment,\n        headers={\"Authorization\": \"Token \" + api_key},\n    )\n    response = r.json()\n    built_assessment = Assessment.build(r.json())\n    return built_assessment\n@app.get(\"/{api_key}\")",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "read_root",
-        "kind": 2,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "def read_root(api_key):\n    return convertogeojson(all_data_request(api_key))\n@app.get(\"/{api_key}/{assessment}\")\nasync def single(api_key, assessment):\n    return conversingletogeojson(single_assessment_request(api_key, assessment))",
         "detail": "main",
         "documentation": {}
     },

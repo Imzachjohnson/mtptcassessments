@@ -66,7 +66,10 @@ class AssessmentList(BaseModel):
     assessments: Optional[List[Assessment]]
 
 
-app = FastAPI()
+app = FastAPI(
+    title="Miyamoto MTPTC Assessments",
+    version="0.0.1",
+)
 
 
 API_URL = "https://kc.humanitarianresponse.info/api/v1/data/"

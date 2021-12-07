@@ -224,7 +224,7 @@ async def get__all_data(start: int = 0, limit: int = 10, report: bool = False):
             list_cur = list(assessments)
             return json.loads(json.dumps(list_cur, default=str))
         except:
-            raise HTTPException(status_code=404, detail="Error loading data")
+            raise HTTPException(status_code=404, detail="Error loading datas")
     else:
         try:
             assessments = collection.find({}).skip(start).limit(limit)

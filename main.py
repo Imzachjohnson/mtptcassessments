@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import requests
 from typing import Optional, Any
 from pydantic import BaseModel, Field
@@ -10,6 +10,19 @@ import geojson
 from datetime import datetime
 from typing import List, Any
 import json
+
+from pymongo import MongoClient
+
+myclient = MongoClient(
+    "mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority"
+)
+
+
+# database
+db = myclient["mtptcmiyamoto"]
+
+# Created or Switched to collection
+collection = db["assessments"]
 
 
 class Attachment(BaseModel):
@@ -167,6 +180,24 @@ def all_data_request(api_key, start, limit):
     return built_assessment
 
 
+def all_data_request_no_pydantic(api_key, start, limit):
+
+    request_data = {"Authorization": "Token " + api_key}
+    r = requests.get(
+        url=API_URL + FORM_ID + f"?start={start}&limit={limit}",
+        headers={"Authorization": "Token " + api_key},
+        timeout=800,
+    )
+    response = r.json()
+
+    for r in response:
+        for k, l in list(r.items()):
+            print(k)
+            r[k.replace("/", "_")] = r.pop(k)
+
+    return response
+
+
 def single_assessment_request(api_key, assessment):
     request_data = {"Authorization": "Token " + api_key}
     r = requests.get(
@@ -180,12 +211,24 @@ def single_assessment_request(api_key, assessment):
     return built_assessment
 
 
-@app.get("/{api_key}")
+@app.get("/geojson/{api_key}")
 async def read_root(api_key, start: int = 0, limit: int = 10):
     return convertogeojson(all_data_request(api_key, start, limit))
 
 
-@app.get("/{api_key}/{assessment}")
-async def single(api_key, assessment):
-
-    return conversingletogeojson(single_assessment_request(api_key, assessment))
+@app.get("/assessment-data/")
+async def get__all_data(start: int = 0, limit: int = 10, report: bool = False):
+    if report:
+        try:
+            assessments = collection.find({}, {"repairs": 0}).skip(start).limit(limit)
+            list_cur = list(assessments)
+            return json.loads(json.dumps(list_cur, default=str))
+        except:
+            raise HTTPException(status_code=404, detail="Error loading data")
+    else:
+        try:
+            assessments = collection.find({}).skip(start).limit(limit)
+            list_cur = list(assessments)
+            return json.loads(json.dumps(list_cur, default=str))
+        except:
+            raise HTTPException(status_code=404, detail="Error loading data")

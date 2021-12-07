@@ -8,6 +8,14 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -123,6 +131,14 @@
         "documentation": {}
     },
     {
+        "label": "MongoClient",
+        "importPath": "pymongo",
+        "description": "pymongo",
+        "isExtraImport": true,
+        "detail": "pymongo",
+        "documentation": {}
+    },
+    {
         "label": "Attachment",
         "kind": 6,
         "importPath": "main",
@@ -186,11 +202,47 @@
         "documentation": {}
     },
     {
+        "label": "all_data_request_no_pydantic",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def all_data_request_no_pydantic(api_key, start, limit):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID + f\"?start={start}&limit={limit}\",\n        headers={\"Authorization\": \"Token \" + api_key},\n        timeout=800,\n    )\n    response = r.json()\n    for r in response:\n        for k, l in list(r.items()):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "single_assessment_request",
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def single_assessment_request(api_key, assessment):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID + \"/\" + assessment,\n        headers={\"Authorization\": \"Token \" + api_key},\n    )\n    response = r.json()\n    built_assessment = Assessment.build(r.json())\n    return built_assessment\n@app.get(\"/{api_key}\")",
+        "peekOfCode": "def single_assessment_request(api_key, assessment):\n    request_data = {\"Authorization\": \"Token \" + api_key}\n    r = requests.get(\n        url=API_URL + FORM_ID + \"/\" + assessment,\n        headers={\"Authorization\": \"Token \" + api_key},\n    )\n    response = r.json()\n    built_assessment = Assessment.build(r.json())\n    return built_assessment\n@app.get(\"/geojson/{api_key}\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "myclient",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "collection",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "collection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int",
         "detail": "main",
         "documentation": {}
     },

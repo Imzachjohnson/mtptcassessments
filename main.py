@@ -220,7 +220,7 @@ async def read_root(api_key, start: int = 0, limit: int = 10):
 
 
 @app.get("/assessment-data/")
-async def get__all_data(start: int = 0, limit: int = 10, report: bool = False):
+async def get_all_data(start: int = 0, limit: int = 10, report: bool = False):
     if report:
         try:
             assessments = collection.find({}, {"repairs": 0}).skip(start).limit(limit)
@@ -235,3 +235,11 @@ async def get__all_data(start: int = 0, limit: int = 10, report: bool = False):
             return json.loads(json.dumps(list_cur, default=str))
         except:
             raise HTTPException(status_code=404, detail="Error loading data")
+
+
+@app.get("/count/")
+async def count_records():
+    try:
+        return {"assessments": collection.count_documents({})}
+    except:
+        raise HTTPException(status_code=404, detail="Error fetching count")

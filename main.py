@@ -219,17 +219,36 @@ def single_assessment_request(api_key, assessment):
 
 
 @app.get("/geojson/{api_key}")
-async def read_root(api_key, start: int = 0, limit: int = 10):
+async def get_geojson(api_key, start: int = 0, limit: int = 10):
     return convertogeojson(all_data_request(api_key, start, limit))
 
 
 @app.get("/assessment-data/")
-async def get_all_data(start: int = 0, limit: int = 10, repairs: bool = False):
+async def get_all_data(
+    start: int = 0,
+    limit: int = 10,
+    repairs: bool = False,
+    coordinatesonly: bool = False,
+):
     if limit >= 10001:
         raise HTTPException(
             status_code=404,
             detail="Record limit exceeded. Please keep requests below 10,000 assessments per request",
         )
+
+    if coordinatesonly:
+        results = (
+            collection.find(
+                {},
+                {
+                    "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
+                    "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
+                },
+            )
+            .skip(start)
+            .limit(limit)
+        )
+        return parse_json(results)
 
     if repairs:
         try:
@@ -313,6 +332,32 @@ async def assessment_statistics():
 
     except:
         raise HTTPException(status_code=404, detail="Error fetching statistics")
+
+
+@app.get("/assessment-data/report")
+async def report(start: int = 0, limit: int = 10):
+    results = (
+        collection.find(
+            {},
+            {
+                "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
+                "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
+                "K-0014 - Signalisation du bâtiment": 1,
+                "F-0004 - Type d'occupation": 1,
+                "D-0002 - Dans quelle commune ?": 1,
+                "Type d'occupation": 1,
+                "B-0000 - Division": 1,
+                "Ce batiment est-il complètement effondré?": 1,
+                "E-0002 - Nombre d'etages": 1,
+                "E-0004 - Type de structure": 1,
+                "F-0001 - Surperficie approximative en m²": 1,
+                "F-0002 - Nombre de résidence ou patients / élèves / employés": 1,
+            },
+        )
+        .skip(start)
+        .limit(limit)
+    )
+    return parse_json(results)
 
 
 # collection2 = db["repairs"]

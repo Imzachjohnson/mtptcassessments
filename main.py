@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import requests
-from typing import Optional, Any
+from typing import List, Any, Optional
 from pydantic import BaseModel, Field
 from geojson import MultiPoint
 from geojson import Feature, Point, FeatureCollection
@@ -8,10 +8,11 @@ import geojson
 from bson import json_util
 
 from datetime import datetime
-from typing import List, Any
 import json
+from models import *
 
 from pymongo import MongoClient
+
 
 myclient = MongoClient(
     "mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority"
@@ -25,67 +26,12 @@ db = myclient["mtptcmiyamoto"]
 collection = db["assessments"]
 
 
+def image_url(image: str):
+    return f"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}"
+
+
 def parse_json(data):
     return json.loads(json_util.dumps(data))
-
-
-class Attachment(BaseModel):
-    download_url: str
-
-    download_medium_url: str
-    download_small_url: str
-    mimetype: str
-    filename: str
-    instance: int
-    xform: int
-
-
-class EnqDetailleGroupNiveau(BaseModel):
-    photo: str = Field(
-        None, alias="enq_detaille/group_niveau/group_fo3pt80/Photo_du_plan_du_batiment"
-    )
-
-
-class Assessment(BaseModel):
-    id: str = Field(None, alias="_id")
-    username: str = None
-    attachments: List[Attachment] = Field(None, alias="_attachments")
-    status: str = None
-    geolocation: List[Any] = Field(None, alias="_geolocation")
-    tags: List[Any] = None
-    notes: List[Any] = None
-    submitted_by: str = None
-    plan_photo: List[EnqDetailleGroupNiveau] = Field(
-        None, alias="enq_detaille/group_niveau"
-    )
-    principal_photo: str = Field(
-        None, alias="D/group_idencontact/Photo_de_la_fa_ade_principale"
-    )
-
-    def build(data):
-        return Assessment(**data)
-
-
-class GeoAssessment(BaseModel):
-    id: str = Field(None, alias="_id")
-    geolocation: List[Any] = Field(None, alias="_geolocation")
-    plan_photo: List[EnqDetailleGroupNiveau] = Field(
-        None, alias="enq_detaille/group_niveau"
-    )
-    principal_photo: str = Field(
-        None, alias="D/group_idencontact/Photo_de_la_fa_ade_principale"
-    )
-
-    def build(data):
-        return Assessment(**data)
-
-
-class AssessmentList(BaseModel):
-    assessments: Optional[List[Assessment]]
-
-
-class GeoAssessmentList(BaseModel):
-    assessments: Optional[List[GeoAssessment]]
 
 
 app = FastAPI(
@@ -131,7 +77,6 @@ def convertogeojson(received_assessments: AssessmentList):
                 for index, image in enumerate(all_images):
                     properties_temp.update({f"image{str(index)}": image})
             except Exception as e:
-                print(e)
                 image = "None"
 
             my_point = Point(
@@ -178,7 +123,7 @@ def conversingletogeojson(assessment: Assessment):
             for index, image in enumerate(all_images):
                 properties_temp.update({f"image{str(index)}": image})
         except Exception as e:
-            print(e)
+
             image = "None"
 
         my_point = Point(
@@ -217,7 +162,6 @@ def all_data_request_no_pydantic(api_key, start, limit):
 
     for r in response:
         for k, l in list(r.items()):
-            print(k)
             r[k.replace("/", "_")] = r.pop(k)
 
     return response
@@ -239,7 +183,8 @@ def single_assessment_request(api_key, assessment):
 @app.get(
     "/geojson/{api_key}",
     tags=["Geospatial Data"],
-    summary="Returns a GeoJSON feature collection with associated assessment images.",
+    summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.",
+    deprecated=True,
 )
 async def get_geojson(api_key, start: int = 0, limit: int = 10):
     return convertogeojson(all_data_request(api_key, start, limit))
@@ -394,20 +339,80 @@ async def report(start: int = 0, limit: int = 10):
     return parse_json(results)
 
 
-@app.get(
-    "/geojsonv2/",
-    tags=["Geospatial Data"],
-    summary="Returns a GeoJSON feature collection with associated assessment images.",
-)
-async def get_geojson(start: int = 0, limit: int = 10):
-    collection.find(
-        {},
-        {
-            "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
-            "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
-            "koboid": 1,
-            "Photo de la façade principale_URL": 1,
-        },
-    ).skip(start).limit(limit)
+async def geo_json_lookup(start, limit):
+    results = (
+        collection.find(
+            {},
+            {
+                "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
+                "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
+                "koboid": 1,
+                "Photo de la façade principale": 1,
+                "Plan du rez de chaussée": 1,
+                "I-0011 Photo de la menace externe observee (Facultatif)": 1,
+                "J-0001 - Prise de vue 1 (facultatif)": 1,
+                "J-0002 - Prise de vue 2 (facultatif)": 1,
+                "J-0003 - Prive de vue 3 (facultatif)": 1,
+                "J-0004 - Prise de vue 4 (facultatif)": 1,
+                "J-0005 - Prise de vue 5 (facultatif)": 1,
+                "J-0006 - Prise de vue 6 (facultatif)": 1,
+                "_id": 0,
+            },
+        )
+        .skip(start)
+        .limit(limit)
+    )
 
-    return {}
+    try:
+
+        assessments = []
+        for r in results:
+            assessments.append(GeoAssessment(**r))
+        return assessments
+    except:
+        return None
+
+
+async def new_build_geojson(results: []):
+
+    data = []
+
+    for assessment in results:
+        if assessment.latitude and assessment.longitude:
+            props = {"id": assessment.koboid}
+
+            if assessment.principal_photo:
+                props.update({"image0": image_url(assessment.principal_photo)})
+            else:
+                props.update({"image0": "None"})
+
+            if assessment.plan_photo:
+                props.update({"image1": image_url(assessment.plan_photo)})
+            else:
+                props.update({"image1": "None"})
+
+            additional_photos = assessment.images()
+
+            for index, photo in enumerate(additional_photos):
+                ind = str(index + 2)
+                props.update({f"image{ind}": image_url(photo)})
+
+            my_point = Point((float(assessment.longitude), float(assessment.latitude)))
+            my_feature = Feature(geometry=Point(my_point), properties=props)
+            data.append(my_feature)
+
+    return FeatureCollection(data)
+
+
+@app.get(
+    "/geojsonv2",
+    tags=["Geospatial Data"],
+    summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Miyamoto database.",
+)
+async def get_geojson_miyamoto(start: int = 0, limit: int = 10):
+    results = await geo_json_lookup(start, limit)
+    if results:
+        final_json: FeatureCollection = await new_build_geojson(results)
+        return final_json
+
+    raise HTTPException(404, "Could not build GeoJson at this time.")

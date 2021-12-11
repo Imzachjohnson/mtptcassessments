@@ -25,7 +25,7 @@
         "documentation": {}
     },
     {
-        "label": "Optional",
+        "label": "List",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -34,6 +34,14 @@
     },
     {
         "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -54,6 +62,30 @@
         "description": "typing",
         "isExtraImport": true,
         "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -139,6 +171,14 @@
         "documentation": {}
     },
     {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "MongoClient",
         "importPath": "pymongo",
         "description": "pymongo",
@@ -147,56 +187,11 @@
         "documentation": {}
     },
     {
-        "label": "Attachment",
-        "kind": 6,
+        "label": "image_url",
+        "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):\n    photo: str = Field(",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "EnqDetailleGroupNiveau",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class EnqDetailleGroupNiveau(BaseModel):\n    photo: str = Field(\n        None, alias=\"enq_detaille/group_niveau/group_fo3pt80/Photo_du_plan_du_batiment\"\n    )\nclass Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "Assessment",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    tags: List[Any] = None\n    notes: List[Any] = None\n    submitted_by: str = None\n    plan_photo: List[EnqDetailleGroupNiveau] = Field(",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "GeoAssessment",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class GeoAssessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    plan_photo: List[EnqDetailleGroupNiveau] = Field(\n        None, alias=\"enq_detaille/group_niveau\"\n    )\n    principal_photo: str = Field(\n        None, alias=\"D/group_idencontact/Photo_de_la_fa_ade_principale\"\n    )\n    def build(data):",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "AssessmentList",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]\nclass GeoAssessmentList(BaseModel):\n    assessments: Optional[List[GeoAssessment]]\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "GeoAssessmentList",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class GeoAssessmentList(BaseModel):\n    assessments: Optional[List[GeoAssessment]]\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
+        "peekOfCode": "def image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"",
         "detail": "main",
         "documentation": {}
     },
@@ -205,7 +200,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int",
+        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
         "detail": "main",
         "documentation": {}
     },
@@ -259,7 +254,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):",
+        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):",
         "detail": "main",
         "documentation": {}
     },
@@ -268,7 +263,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str",
+        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",",
         "detail": "main",
         "documentation": {}
     },
@@ -277,7 +272,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "collection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int",
+        "peekOfCode": "collection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"",
         "detail": "main",
         "documentation": {}
     },
@@ -315,6 +310,60 @@
         "description": "main",
         "peekOfCode": "FORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }\n        if assessment.geolocation[0] and assessment.geolocation[1]:\n            image: str = \"\"\n            all_images = []",
         "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "Attachment",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    download_large_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "EnqDetailleGroupNiveau",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class EnqDetailleGroupNiveau(BaseModel):\n    photo: str = Field(\n        None, alias=\"enq_detaille/group_niveau/group_fo3pt80/Photo_du_plan_du_batiment\"\n    )\nclass Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Assessment",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Assessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    username: str = None\n    attachments: List[Attachment] = Field(None, alias=\"_attachments\")\n    status: str = None\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    tags: List[Any] = None\n    notes: List[Any] = None\n    submitted_by: str = None\n    plan_photo: List[EnqDetailleGroupNiveau] = Field(",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "GeoAssessment",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class GeoAssessment(BaseModel):\n    latitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_latitude\"\n    )\n    longitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_longitude\"\n    )\n    koboid: str\n    principal_photo: Optional[str] = Field(None, alias=\"Photo de la façade principale\")\n    plan_photo: Optional[str] = Field(None, alias=\"Plan du rez de chaussée\")",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "GeoAssessmentList",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class GeoAssessmentList(BaseModel):\n    assessments: List[GeoAssessment]\n    def build(data):\n        return GeoAssessmentList(**data)\nclass AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "AssessmentList",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]",
+        "detail": "models",
         "documentation": {}
     }
 ]

@@ -331,6 +331,8 @@ async def report(start: int = 0, limit: int = 10):
                 "E-0004 - Type de structure": 1,
                 "F-0001 - Surperficie approximative en m²": 1,
                 "F-0002 - Nombre de résidence ou patients / élèves / employés": 1,
+                "today": 1,
+                "K-0014b- Ce batiment  est-il réparable ou à réparer ?": 1,
                 "_id": 0,
             },
         )

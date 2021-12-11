@@ -151,7 +151,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):",
+        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):\n    photo: str = Field(",
         "detail": "main",
         "documentation": {}
     },
@@ -174,11 +174,29 @@
         "documentation": {}
     },
     {
+        "label": "GeoAssessment",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class GeoAssessment(BaseModel):\n    id: str = Field(None, alias=\"_id\")\n    geolocation: List[Any] = Field(None, alias=\"_geolocation\")\n    plan_photo: List[EnqDetailleGroupNiveau] = Field(\n        None, alias=\"enq_detaille/group_niveau\"\n    )\n    principal_photo: str = Field(\n        None, alias=\"D/group_idencontact/Photo_de_la_fa_ade_principale\"\n    )\n    def build(data):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "AssessmentList",
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
+        "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]\nclass GeoAssessmentList(BaseModel):\n    assessments: Optional[List[GeoAssessment]]\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "GeoAssessmentList",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class GeoAssessmentList(BaseModel):\n    assessments: Optional[List[GeoAssessment]]\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
         "detail": "main",
         "documentation": {}
     },
@@ -187,7 +205,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int",
+        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int",
         "detail": "main",
         "documentation": {}
     },
@@ -250,7 +268,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str",
+        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str",
         "detail": "main",
         "documentation": {}
     },
@@ -259,7 +277,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "collection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str",
+        "peekOfCode": "collection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int",
         "detail": "main",
         "documentation": {}
     },

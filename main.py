@@ -31,7 +31,7 @@ def parse_json(data):
 
 class Attachment(BaseModel):
     download_url: str
-    download_large_url: str
+
     download_medium_url: str
     download_small_url: str
     mimetype: str
@@ -66,8 +66,26 @@ class Assessment(BaseModel):
         return Assessment(**data)
 
 
+class GeoAssessment(BaseModel):
+    id: str = Field(None, alias="_id")
+    geolocation: List[Any] = Field(None, alias="_geolocation")
+    plan_photo: List[EnqDetailleGroupNiveau] = Field(
+        None, alias="enq_detaille/group_niveau"
+    )
+    principal_photo: str = Field(
+        None, alias="D/group_idencontact/Photo_de_la_fa_ade_principale"
+    )
+
+    def build(data):
+        return Assessment(**data)
+
+
 class AssessmentList(BaseModel):
     assessments: Optional[List[Assessment]]
+
+
+class GeoAssessmentList(BaseModel):
+    assessments: Optional[List[GeoAssessment]]
 
 
 app = FastAPI(
@@ -349,7 +367,7 @@ async def assessment_statistics():
 @app.get(
     "/assessment-data/report/",
     tags=["Reporting"],
-    summary="Returns data specific to Miyamoto PowerBI Reports.",
+    summary="Returns data specificely for Miyamoto PowerBI Reports.",
 )
 async def report(start: int = 0, limit: int = 10):
     results = (
@@ -376,11 +394,20 @@ async def report(start: int = 0, limit: int = 10):
     return parse_json(results)
 
 
-# collection2 = db["repairs"]
+@app.get(
+    "/geojsonv2/",
+    tags=["Geospatial Data"],
+    summary="Returns a GeoJSON feature collection with associated assessment images.",
+)
+async def get_geojson(start: int = 0, limit: int = 10):
+    collection.find(
+        {},
+        {
+            "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
+            "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
+            "koboid": 1,
+            "Photo de la façade principale_URL": 1,
+        },
+    ).skip(start).limit(limit)
 
-
-# @app.get("/index/")
-# async def get_all_data():
-#     collection2.create_index("_parent_index")
-#     collection.create_index("_index")
-#     return {}
+    return {}

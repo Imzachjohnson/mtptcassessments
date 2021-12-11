@@ -218,12 +218,20 @@ def single_assessment_request(api_key, assessment):
     return built_assessment
 
 
-@app.get("/geojson/{api_key}")
+@app.get(
+    "/geojson/{api_key}",
+    tags=["Geospatial Data"],
+    summary="Returns a GeoJSON feature collection with associated assessment images.",
+)
 async def get_geojson(api_key, start: int = 0, limit: int = 10):
     return convertogeojson(all_data_request(api_key, start, limit))
 
 
-@app.get("/assessment-data/")
+@app.get(
+    "/assessment-data/",
+    tags=["Assessment Data"],
+    summary="Access the full assessment dataset. Queries limited to 10,000 results per request.",
+)
 async def get_all_data(
     start: int = 0,
     limit: int = 10,
@@ -281,7 +289,11 @@ async def get_all_data(
             raise HTTPException(status_code=404, detail="Error loading data")
 
 
-@app.get("/assessment-data/stats/")
+@app.get(
+    "/assessment-data/stats/",
+    tags=["Reporting"],
+    summary="Returns a JSON response with various assessment data statistics.",
+)
 async def assessment_statistics():
     try:
         # tags
@@ -334,7 +346,11 @@ async def assessment_statistics():
         raise HTTPException(status_code=404, detail="Error fetching statistics")
 
 
-@app.get("/assessment-data/report")
+@app.get(
+    "/assessment-data/report/",
+    tags=["Reporting"],
+    summary="Returns data specific to Miyamoto PowerBI Reports.",
+)
 async def report(start: int = 0, limit: int = 10):
     results = (
         collection.find(

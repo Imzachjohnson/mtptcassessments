@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from geojson import MultiPoint
 from geojson import Feature, Point, FeatureCollection
 import geojson
-
+from bson import json_util
 
 from datetime import datetime
 from typing import List, Any
@@ -23,6 +23,10 @@ db = myclient["mtptcmiyamoto"]
 
 # Created or Switched to collection
 collection = db["assessments"]
+
+
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
 
 
 class Attachment(BaseModel):
@@ -220,14 +224,35 @@ async def read_root(api_key, start: int = 0, limit: int = 10):
 
 
 @app.get("/assessment-data/")
-async def get_all_data(start: int = 0, limit: int = 10, report: bool = False):
-    if report:
+async def get_all_data(start: int = 0, limit: int = 10, repairs: bool = False):
+    if limit >= 10001:
+        raise HTTPException(
+            status_code=404,
+            detail="Record limit exceeded. Please keep requests below 10,000 assessments per request",
+        )
+
+    if repairs:
         try:
-            assessments = collection.find({}, {"repairs": 0}).skip(start).limit(limit)
-            list_cur = list(assessments)
-            return json.loads(json.dumps(list_cur, default=str))
+            pipeline = [
+                {
+                    "$lookup": {
+                        "from": "repairs",
+                        "localField": "_index",
+                        "foreignField": "_parent_index",
+                        "as": "repairs",
+                    },
+                },
+                {"$limit": limit},
+                {"$skip": start},
+            ]
+
+            result = collection.aggregate(pipeline)
+
+            l = parse_json(result)
+
+            return l
         except:
-            raise HTTPException(status_code=404, detail="Error loading datas")
+            raise HTTPException(status_code=404, detail="Error loading data")
     else:
         try:
             assessments = collection.find({}).skip(start).limit(limit)
@@ -237,9 +262,64 @@ async def get_all_data(start: int = 0, limit: int = 10, report: bool = False):
             raise HTTPException(status_code=404, detail="Error loading data")
 
 
-@app.get("/count/")
-async def count_records():
+@app.get("/assessment-data/stats/")
+async def assessment_statistics():
     try:
-        return {"assessments": collection.count_documents({})}
+        # tags
+        tagspipe = [
+            {
+                "$group": {
+                    "_id": "$K-0014 - Signalisation du bâtiment",
+                    "count": {"$sum": 1},
+                }
+            }
+        ]
+        tags = collection.aggregate(tagspipe)
+
+        # commune
+        repairspipe = [
+            {"$group": {"_id": "$D-0002 - Dans quelle commune ?", "count": {"$sum": 1}}}
+        ]
+        repairs = collection.aggregate(repairspipe)
+
+        # F-0004 - Type d'occupation
+
+        buildingtypepipe = [
+            {"$group": {"_id": "$F-0004 - Type d'occupation", "count": {"$sum": 1}}}
+        ]
+        buildingtype = collection.aggregate(buildingtypepipe)
+
+        # Residents Sum
+        residentspipe = [
+            {
+                "$group": {
+                    "_id": "null",
+                    "total": {
+                        "$sum": "$F-0002 - Nombre de résidence ou patients / élèves / employés"
+                    },
+                }
+            }
+        ]
+
+        residentscount = collection.aggregate(residentspipe)
+
+        return {
+            "total_assessments": collection.count_documents({}),
+            "tags": parse_json(tags),
+            "commune": parse_json(repairs),
+            "building_type": parse_json(buildingtype),
+            "affected_residents": parse_json(residentscount),
+        }
+
     except:
-        raise HTTPException(status_code=404, detail="Error fetching count")
+        raise HTTPException(status_code=404, detail="Error fetching statistics")
+
+
+# collection2 = db["repairs"]
+
+
+# @app.get("/index/")
+# async def get_all_data():
+#     collection2.create_index("_parent_index")
+#     collection.create_index("_index")
+#     return {}

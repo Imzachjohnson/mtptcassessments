@@ -114,6 +114,14 @@
         "documentation": {}
     },
     {
+        "label": "json_util",
+        "importPath": "bson",
+        "description": "bson",
+        "isExtraImport": true,
+        "detail": "bson",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -175,6 +183,15 @@
         "documentation": {}
     },
     {
+        "label": "parse_json",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "convertogeojson",
         "kind": 2,
         "importPath": "main",
@@ -224,7 +241,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str",
+        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):",
         "detail": "main",
         "documentation": {}
     },
@@ -233,7 +250,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str",
+        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str",
         "detail": "main",
         "documentation": {}
     },
@@ -242,7 +259,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "collection = db[\"assessments\"]\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int",
+        "peekOfCode": "collection = db[\"assessments\"]\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\nclass Attachment(BaseModel):\n    download_url: str\n    download_large_url: str\n    download_medium_url: str\n    download_small_url: str\n    mimetype: str\n    filename: str",
         "detail": "main",
         "documentation": {}
     },

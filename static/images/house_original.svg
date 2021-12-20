@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="480px" height="468px" viewBox="0 0 480 468" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>House Original</title>
+    <desc>Created with Sketch.</desc>
+    <g id="House-Original" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M193,443 L95,443 C86.7157288,443 80,436.284271 80,428 L80,222 C80,221.663971 80.0110494,221.330524 80.0328046,221 L36,221 L240,16 L444,221 L404.967195,221 C404.988951,221.330524 405,221.663971 405,222 L405,428 C405,436.284271 398.284271,443 390,443 L292,443 L292,319 C292,312.924868 287.075132,308 281,308 L204,308 C197.924868,308 193,312.924868 193,319 L193,443 Z" id="Triangle-2" stroke="#FFFFFF" stroke-width="20"></path>
+    </g>
+</svg>

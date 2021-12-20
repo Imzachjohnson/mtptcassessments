@@ -16,6 +16,22 @@
         "documentation": {}
     },
     {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -154,6 +170,23 @@
         "documentation": {}
     },
     {
+        "label": "dumps",
+        "importPath": "bson.json_util",
+        "description": "bson.json_util",
+        "isExtraImport": true,
+        "detail": "bson.json_util",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -187,11 +220,43 @@
         "documentation": {}
     },
     {
+        "label": "FileResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "StaticFiles",
+        "importPath": "fastapi.staticfiles",
+        "description": "fastapi.staticfiles",
+        "isExtraImport": true,
+        "detail": "fastapi.staticfiles",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
+        "documentation": {}
+    },
+    {
         "label": "image_url",
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"",
+        "peekOfCode": "def image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data, dashboard: bool = False):\n    if dashboard:\n        data = json.loads(json_util.dumps(data))\n        print(data)\n        for d in data:\n            print(d)\n            d[\"x\"] = d.pop(\"_id\")\n        print(data)",
         "detail": "main",
         "documentation": {}
     },
@@ -200,7 +265,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
+        "peekOfCode": "def parse_json(data, dashboard: bool = False):\n    if dashboard:\n        data = json.loads(json_util.dumps(data))\n        print(data)\n        for d in data:\n            print(d)\n            d[\"x\"] = d.pop(\"_id\")\n        print(data)\n        return data\n    return json.loads(json_util.dumps(data))",
         "detail": "main",
         "documentation": {}
     },
@@ -254,7 +319,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):",
+        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data, dashboard: bool = False):",
         "detail": "main",
         "documentation": {}
     },
@@ -263,7 +328,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",",
+        "peekOfCode": "db = myclient[\"mtptcmiyamoto\"]\n# Created or Switched to collection\ncollection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data, dashboard: bool = False):\n    if dashboard:\n        data = json.loads(json_util.dumps(data))\n        print(data)\n        for d in data:",
         "detail": "main",
         "documentation": {}
     },
@@ -272,7 +337,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "collection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data):\n    return json.loads(json_util.dumps(data))\napp = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"",
+        "peekOfCode": "collection = db[\"assessments\"]\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\ndef parse_json(data, dashboard: bool = False):\n    if dashboard:\n        data = json.loads(json_util.dumps(data))\n        print(data)\n        for d in data:\n            print(d)\n            d[\"x\"] = d.pop(\"_id\")",
         "detail": "main",
         "documentation": {}
     },
@@ -281,7 +346,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.0.1\",\n)\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:",
+        "peekOfCode": "app = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.1.1\",\n)\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "templates",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {\n            \"id\": assessment.id,\n        }",
         "detail": "main",
         "documentation": {}
     },
@@ -344,7 +418,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class GeoAssessment(BaseModel):\n    latitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_latitude\"\n    )\n    longitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_longitude\"\n    )\n    koboid: str\n    principal_photo: Optional[str] = Field(None, alias=\"Photo de la façade principale\")\n    plan_photo: Optional[str] = Field(None, alias=\"Plan du rez de chaussée\")",
+        "peekOfCode": "class GeoAssessment(BaseModel):\n    latitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_latitude\"\n    )\n    longitude: str = Field(\n        None, alias=\"_Coordonnées GPS ( 6m près max du bâtiment)_longitude\"\n    )\n    koboid: Optional[str]\n    principal_photo: Optional[str] = Field(None, alias=\"Photo de la façade principale\")\n    plan_photo: Optional[str] = Field(None, alias=\"Plan du rez de chaussée\")",
         "detail": "models",
         "documentation": {}
     },

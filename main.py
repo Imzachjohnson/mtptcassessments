@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Request
 import requests
 from typing import List, Any, Optional
 from pydantic import BaseModel, Field
@@ -6,12 +6,20 @@ from geojson import MultiPoint
 from geojson import Feature, Point, FeatureCollection
 import geojson
 from bson import json_util
+from bson.json_util import dumps
 
+import pandas as pd
 from datetime import datetime
 import json
 from models import *
 
 from pymongo import MongoClient
+
+
+from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 
 myclient = MongoClient(
@@ -30,15 +38,28 @@ def image_url(image: str):
     return f"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}"
 
 
-def parse_json(data):
+def parse_json(data, dashboard: bool = False):
+
+    if dashboard:
+        data = json.loads(json_util.dumps(data))
+        print(data)
+        for d in data:
+            print(d)
+            d["x"] = d.pop("_id")
+        print(data)
+        return data
+
     return json.loads(json_util.dumps(data))
 
 
 app = FastAPI(
     title="Miyamoto MTPTC Assessments",
-    version="0.0.1",
+    version="0.1.1",
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
 
 API_URL = "https://kc.humanitarianresponse.info/api/v1/data/"
 
@@ -257,8 +278,12 @@ async def get_all_data(
     tags=["Reporting"],
     summary="Returns a JSON response with various assessment data statistics.",
 )
-async def assessment_statistics():
+async def assessment_statistics(dashboard: bool = False):
     try:
+
+        if dashboard:
+            pass
+
         # tags
         tagspipe = [
             {
@@ -274,6 +299,12 @@ async def assessment_statistics():
         repairspipe = [
             {"$group": {"_id": "$D-0002 - Dans quelle commune ?", "count": {"$sum": 1}}}
         ]
+
+        if dashboard:
+            repairspipe = [
+                {"$group": {"_id": "$D-0002 - Dans quelle commune ?", "y": {"$sum": 1}}}
+            ]
+
         repairs = collection.aggregate(repairspipe)
 
         # F-0004 - Type d'occupation
@@ -297,6 +328,16 @@ async def assessment_statistics():
 
         residentscount = collection.aggregate(residentspipe)
 
+        if dashboard:
+            print("dashboard is true")
+            return {
+                "total_assessments": collection.count_documents({}),
+                "tags": parse_json(tags),
+                "commune": parse_json(repairs, dashboard=True),
+                "building_type": parse_json(buildingtype),
+                "affected_residents": parse_json(residentscount),
+            }
+
         return {
             "total_assessments": collection.count_documents({}),
             "tags": parse_json(tags),
@@ -312,7 +353,7 @@ async def assessment_statistics():
 @app.get(
     "/assessment-data/report/",
     tags=["Reporting"],
-    summary="Returns data specificely for Miyamoto PowerBI Reports.",
+    summary="Returns data specifically for Miyamoto PowerBI Reports.",
 )
 async def report(start: int = 0, limit: int = 10):
     results = (
@@ -372,7 +413,8 @@ async def geo_json_lookup(start, limit):
         for r in results:
             assessments.append(GeoAssessment(**r))
         return assessments
-    except:
+    except Exception as ex:
+        print(ex)
         return None
 
 
@@ -394,11 +436,14 @@ async def new_build_geojson(results: []):
             else:
                 props.update({"image1": "None"})
 
-            additional_photos = assessment.images()
+            # additional_photos = assessment.images()
 
-            for index, photo in enumerate(additional_photos):
-                ind = str(index + 2)
-                props.update({f"image{ind}": image_url(photo)})
+            # for index, photo in enumerate(additional_photos):
+            #     ind = str(index + 2)
+            #     if photo:
+            #         props.update({f"image{ind}": image_url(photo)})
+            #     else:
+            #         props.update({f"image{ind}": "None"})
 
             my_point = Point((float(assessment.longitude), float(assessment.latitude)))
             my_feature = Feature(geometry=Point(my_point), properties=props)
@@ -419,3 +464,59 @@ async def get_geojson_miyamoto(start: int = 0, limit: int = 10):
         return final_json
 
     raise HTTPException(404, "Could not build GeoJson at this time.")
+
+
+# async def collect_download(start: int, limit: int, commune: str = None):
+#     if commune:
+#         results = collection.find({}).skip(start).limit(limit)
+#     else:
+#         results = collection.find({}).skip(start).limit(limit)
+
+#     json_string = json_util.dumps(results)
+#     json_obj = json.loads(json_string)
+#     data1 = pd.json_normalize(json_obj)
+#     csv = data1.to_csv("FileName.csv")
+
+
+# @app.get(
+#     "/download",
+#     tags=["Files/Downloads"],
+#     summary="Download Assessment Data",
+# )
+# async def report(
+#     filetype: str = "xls", start: int = 0, limit: int = 10, commune: str = None
+# ):
+#     if filetype:
+#         if filetype == "xls":
+#             thefile = await collect_download(start, limit, commune)
+#             FileResponse(path="c:/", filename="test.xls", media_type="text/mp4")
+
+
+async def lookup_assessment_by_qr(qrcode: str):
+
+    result = collection.find_one(
+        {
+            "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment": qrcode
+        }
+    )
+    if result:
+        return parse_json(result)
+
+    raise HTTPException(status_code=404, detail="No assessment with that ID.")
+
+
+@app.get("/assessment-data/qr")
+async def get_assessment_by_qr(
+    qrcode: str, assessment=Depends(lookup_assessment_by_qr)
+):
+    return assessment
+
+
+@app.get("/dashboard")
+async def get_assessment_by_qr(
+    request: Request,
+    response_class=HTMLResponse,
+):
+    return templates.TemplateResponse(
+        "dashboard.html", {"request": request, "data": {}}
+    )

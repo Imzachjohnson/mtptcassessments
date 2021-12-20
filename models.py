@@ -49,7 +49,7 @@ class GeoAssessment(BaseModel):
         None, alias="_Coordonnées GPS ( 6m près max du bâtiment)_longitude"
     )
 
-    koboid: str
+    koboid: Optional[str]
 
     principal_photo: Optional[str] = Field(None, alias="Photo de la façade principale")
     plan_photo: Optional[str] = Field(None, alias="Plan du rez de chaussée")

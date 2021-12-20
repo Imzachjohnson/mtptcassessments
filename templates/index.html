@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+      name="description"
+    />
+    <meta content="Coderthemes" name="author" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" crossorigin=""/>
+
+    <link rel="stylesheet" href="../css/leaflet-sidebar.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+<script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+    <title>Social Feed | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <link rel="icon" href="favicon.ico" />
+    <link
+      href="{{ url_for('static', filename='css/app.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    class="loading"
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":true,"darkMode":false, "showRightSidebarOnStart": true}'
+  >
+    <div class="wrapper">
+      <div class="leftside-menu">
+        <a href="index.html" class="logo text-center logo-light">
+          <span class="logo-lg">
+            <img
+              src="{{ url_for('static', filename='/images/logo.png') }}"
+              alt=""
+              height="16"
+            />
+          </span>
+          <span class="logo-sm">
+            <img
+              src="{{ url_for('static', filename='/images/logo_sm.png') }}"
+              alt=""
+              height="16"
+            />
+          </span>
+        </a>
+
+        <a href="index.html" class="logo text-center logo-dark">
+          <span class="logo-lg">
+            <img
+              src="{{ url_for('static', filename='/images/logo-dark.png') }}"
+              alt=""
+              height="16"
+            />
+          </span>
+          <span class="logo-sm">
+            <img
+              src="{{ url_for('static', filename='/images/logo_sm_dark.png') }}"
+              alt=""
+              height="16"
+            />
+          </span>
+        </a>
+
+        <div class="h-100" id="leftside-menu-container" data-simplebar>
+          <ul class="side-nav">
+            <li class="side-nav-title side-nav-item">Navigation</li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarDashboards"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+                class="side-nav-link"
+              >
+                <i class="uil-home-alt"></i>
+                <span class="badge bg-success float-end">4</span>
+                <span> Dashboards </span>
+              </a>
+              <div class="collapse" id="sidebarDashboards">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="dashboard-analytics.html">Analytics</a>
+                  </li>
+                  <li>
+                    <a href="dashboard-crm.html">CRM</a>
+                  </li>
+                  <li>
+                    <a href="index.html">Ecommerce</a>
+                  </li>
+                  <li>
+                    <a href="dashboard-projects.html">Projects</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-title side-nav-item">Apps</li>
+
+            <li class="side-nav-item">
+              <a href="apps-calendar.html" class="side-nav-link">
+                <i class="uil-calender"></i>
+                <span> Calendar </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a href="apps-chat.html" class="side-nav-link">
+                <i class="uil-comments-alt"></i>
+                <span> Chat </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarEcommerce"
+                aria-expanded="false"
+                aria-controls="sidebarEcommerce"
+                class="side-nav-link"
+              >
+                <i class="uil-store"></i>
+                <span> Ecommerce </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarEcommerce">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="apps-ecommerce-products.html">Products</a>
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-products-details.html"
+                      >Products Details</a
+                    >
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-orders.html">Orders</a>
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-orders-details.html"
+                      >Order Details</a
+                    >
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-customers.html">Customers</a>
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-shopping-cart.html"
+                      >Shopping Cart</a
+                    >
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-checkout.html">Checkout</a>
+                  </li>
+                  <li>
+                    <a href="apps-ecommerce-sellers.html">Sellers</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarEmail"
+                aria-expanded="false"
+                aria-controls="sidebarEmail"
+                class="side-nav-link"
+              >
+                <i class="uil-envelope"></i>
+                <span> Email </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarEmail">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="apps-email-inbox.html">Inbox</a>
+                  </li>
+                  <li>
+                    <a href="apps-email-read.html">Read Email</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarProjects"
+                aria-expanded="false"
+                aria-controls="sidebarProjects"
+                class="side-nav-link"
+              >
+                <i class="uil-briefcase"></i>
+                <span> Projects </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarProjects">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="apps-projects-list.html">List</a>
+                  </li>
+                  <li>
+                    <a href="apps-projects-details.html">Details</a>
+                  </li>
+                  <li>
+                    <a href="apps-projects-gantt.html"
+                      >Gantt
+                      <span
+                        class="
+                          badge
+                          rounded-pill
+                          badge-light-lighten
+                          font-10
+                          float-end
+                        "
+                        >New</span
+                      ></a
+                    >
+                  </li>
+                  <li>
+                    <a href="apps-projects-add.html"
+                      >Create Project
+                      <span
+                        class="
+                          badge
+                          rounded-pill
+                          badge-success-lighten
+                          font-10
+                          float-end
+                        "
+                        >New</span
+                      ></a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a href="apps-social-feed.html" class="side-nav-link">
+                <i class="uil-rss"></i>
+                <span> Social Feed </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarTasks"
+                aria-expanded="false"
+                aria-controls="sidebarTasks"
+                class="side-nav-link"
+              >
+                <i class="uil-clipboard-alt"></i>
+                <span> Tasks </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarTasks">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="apps-tasks.html">List</a>
+                  </li>
+                  <li>
+                    <a href="apps-tasks-details.html">Details</a>
+                  </li>
+                  <li>
+                    <a href="apps-kanban.html">Kanban Board</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a href="apps-file-manager.html" class="side-nav-link">
+                <i class="uil-folder-plus"></i>
+                <span> File Manager </span>
+              </a>
+            </li>
+
+            <li class="side-nav-title side-nav-item">Custom</li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarPages"
+                aria-expanded="false"
+                aria-controls="sidebarPages"
+                class="side-nav-link"
+              >
+                <i class="uil-copy-alt"></i>
+                <span> Pages </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarPages">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="pages-profile.html">Profile</a>
+                  </li>
+                  <li>
+                    <a href="pages-profile-2.html">Profile 2</a>
+                  </li>
+                  <li>
+                    <a href="pages-invoice.html">Invoice</a>
+                  </li>
+                  <li>
+                    <a href="pages-faq.html">FAQ</a>
+                  </li>
+                  <li>
+                    <a href="pages-pricing.html">Pricing</a>
+                  </li>
+                  <li>
+                    <a href="pages-maintenance.html">Maintenance</a>
+                  </li>
+                  <li class="side-nav-item">
+                    <a
+                      data-bs-toggle="collapse"
+                      href="#sidebarPagesAuth"
+                      aria-expanded="false"
+                      aria-controls="sidebarPagesAuth"
+                    >
+                      <span> Authentication </span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarPagesAuth">
+                      <ul class="side-nav-third-level">
+                        <li>
+                          <a href="pages-login.html">Login</a>
+                        </li>
+                        <li>
+                          <a href="pages-login-2.html">Login 2</a>
+                        </li>
+                        <li>
+                          <a href="pages-register.html">Register</a>
+                        </li>
+                        <li>
+                          <a href="pages-register-2.html">Register 2</a>
+                        </li>
+                        <li>
+                          <a href="pages-logout.html">Logout</a>
+                        </li>
+                        <li>
+                          <a href="pages-logout-2.html">Logout 2</a>
+                        </li>
+                        <li>
+                          <a href="pages-recoverpw.html">Recover Password</a>
+                        </li>
+                        <li>
+                          <a href="pages-recoverpw-2.html"
+                            >Recover Password 2</a
+                          >
+                        </li>
+                        <li>
+                          <a href="pages-lock-screen.html">Lock Screen</a>
+                        </li>
+                        <li>
+                          <a href="pages-lock-screen-2.html">Lock Screen 2</a>
+                        </li>
+                        <li>
+                          <a href="pages-confirm-mail.html">Confirm Mail</a>
+                        </li>
+                        <li>
+                          <a href="pages-confirm-mail-2.html">Confirm Mail 2</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="side-nav-item">
+                    <a
+                      data-bs-toggle="collapse"
+                      href="#sidebarPagesError"
+                      aria-expanded="false"
+                      aria-controls="sidebarPagesError"
+                    >
+                      <span> Error </span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarPagesError">
+                      <ul class="side-nav-third-level">
+                        <li>
+                          <a href="pages-404.html">Error 404</a>
+                        </li>
+                        <li>
+                          <a href="pages-404-alt.html">Error 404-alt</a>
+                        </li>
+                        <li>
+                          <a href="pages-500.html">Error 500</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="pages-starter.html">Starter Page</a>
+                  </li>
+                  <li>
+                    <a href="pages-preloader.html">With Preloader</a>
+                  </li>
+                  <li>
+                    <a href="pages-timeline.html">Timeline</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a href="landing.html" target="_blank" class="side-nav-link">
+                <i class="uil-globe"></i>
+                <span class="badge bg-secondary text-light float-end">New</span>
+                <span> Landing </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarLayouts"
+                aria-expanded="false"
+                aria-controls="sidebarLayouts"
+                class="side-nav-link"
+              >
+                <i class="uil-window"></i>
+                <span> Layouts </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarLayouts">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="layouts-horizontal.html">Horizontal</a>
+                  </li>
+                  <li>
+                    <a href="layouts-detached.html">Detached</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-title side-nav-item mt-1">Components</li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarBaseUI"
+                aria-expanded="false"
+                aria-controls="sidebarBaseUI"
+                class="side-nav-link"
+              >
+                <i class="uil-box"></i>
+                <span> Base UI </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarBaseUI">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="ui-accordions.html">Accordions</a>
+                  </li>
+                  <li>
+                    <a href="ui-alerts.html">Alerts</a>
+                  </li>
+                  <li>
+                    <a href="ui-avatars.html">Avatars</a>
+                  </li>
+                  <li>
+                    <a href="ui-badges.html">Badges</a>
+                  </li>
+                  <li>
+                    <a href="ui-breadcrumb.html">Breadcrumb</a>
+                  </li>
+                  <li>
+                    <a href="ui-buttons.html">Buttons</a>
+                  </li>
+                  <li>
+                    <a href="ui-cards.html">Cards</a>
+                  </li>
+                  <li>
+                    <a href="ui-carousel.html">Carousel</a>
+                  </li>
+                  <li>
+                    <a href="ui-dropdowns.html">Dropdowns</a>
+                  </li>
+                  <li>
+                    <a href="ui-embed-video.html">Embed Video</a>
+                  </li>
+                  <li>
+                    <a href="ui-grid.html">Grid</a>
+                  </li>
+                  <li>
+                    <a href="ui-list-group.html">List Group</a>
+                  </li>
+                  <li>
+                    <a href="ui-modals.html">Modals</a>
+                  </li>
+                  <li>
+                    <a href="ui-notifications.html">Notifications</a>
+                  </li>
+                  <li>
+                    <a href="ui-offcanvas.html">Offcanvas</a>
+                  </li>
+                  <li>
+                    <a href="ui-pagination.html">Pagination</a>
+                  </li>
+                  <li>
+                    <a href="ui-popovers.html">Popovers</a>
+                  </li>
+                  <li>
+                    <a href="ui-progress.html">Progress</a>
+                  </li>
+                  <li>
+                    <a href="ui-ribbons.html">Ribbons</a>
+                  </li>
+                  <li>
+                    <a href="ui-spinners.html">Spinners</a>
+                  </li>
+                  <li>
+                    <a href="ui-tabs.html">Tabs</a>
+                  </li>
+                  <li>
+                    <a href="ui-tooltips.html">Tooltips</a>
+                  </li>
+                  <li>
+                    <a href="ui-typography.html">Typography</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarExtendedUI"
+                aria-expanded="false"
+                aria-controls="sidebarExtendedUI"
+                class="side-nav-link"
+              >
+                <i class="uil-package"></i>
+                <span> Extended UI </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarExtendedUI">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="extended-dragula.html">Dragula</a>
+                  </li>
+
+                  <li>
+                    <a href="extended-scrollbar.html">Scrollbar</a>
+                  </li>
+                  <li>
+                    <a href="extended-scrollspy.html">Scrollspy</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a href="widgets.html" class="side-nav-link">
+                <i class="uil-layer-group"></i>
+                <span> Widgets </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarIcons"
+                aria-expanded="false"
+                aria-controls="sidebarIcons"
+                class="side-nav-link"
+              >
+                <i class="uil-streering"></i>
+                <span> Icons </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarIcons">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="icons-dripicons.html">Dripicons</a>
+                  </li>
+                  <li>
+                    <a href="icons-mdi.html">Material Design</a>
+                  </li>
+                  <li>
+                    <a href="icons-unicons.html">Unicons</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarForms"
+                aria-expanded="false"
+                aria-controls="sidebarForms"
+                class="side-nav-link"
+              >
+                <i class="uil-document-layout-center"></i>
+                <span> Forms </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarForms">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="form-elements.html">Basic Elements</a>
+                  </li>
+                  <li>
+                    <a href="form-advanced.html">Form Advanced</a>
+                  </li>
+                  <li>
+                    <a href="form-validation.html">Validation</a>
+                  </li>
+                  <li>
+                    <a href="form-wizard.html">Wizard</a>
+                  </li>
+                  <li>
+                    <a href="form-fileuploads.html">File Uploads</a>
+                  </li>
+                  <li>
+                    <a href="form-editors.html">Editors</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarCharts"
+                aria-expanded="false"
+                aria-controls="sidebarCharts"
+                class="side-nav-link"
+              >
+                <i class="uil-chart"></i>
+                <span> Charts </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarCharts">
+                <ul class="side-nav-second-level">
+                  <li class="side-nav-item">
+                    <a
+                      data-bs-toggle="collapse"
+                      href="#sidebarApexCharts"
+                      aria-expanded="false"
+                      aria-controls="sidebarApexCharts"
+                    >
+                      <span> Apex Charts </span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarApexCharts">
+                      <ul class="side-nav-third-level">
+                        <li>
+                          <a href="charts-apex-area.html">Area</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-bar.html">Bar</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-bubble.html">Bubble</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-candlestick.html">Candlestick</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-column.html">Column</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-heatmap.html">Heatmap</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-line.html">Line</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-mixed.html">Mixed</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-pie.html">Pie</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-radar.html">Radar</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-radialbar.html">RadialBar</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-scatter.html">Scatter</a>
+                        </li>
+                        <li>
+                          <a href="charts-apex-sparklines.html">Sparklines</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="charts-brite.html">Britecharts</a>
+                  </li>
+                  <li>
+                    <a href="charts-chartjs.html">Chartjs</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarTables"
+                aria-expanded="false"
+                aria-controls="sidebarTables"
+                class="side-nav-link"
+              >
+                <i class="uil-table"></i>
+                <span> Tables </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarTables">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="tables-basic.html">Basic Tables</a>
+                  </li>
+                  <li>
+                    <a href="tables-datatable.html">Data Tables</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarMaps"
+                aria-expanded="false"
+                aria-controls="sidebarMaps"
+                class="side-nav-link"
+              >
+                <i class="uil-location-point"></i>
+                <span> Maps </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarMaps">
+                <ul class="side-nav-second-level">
+                  <li>
+                    <a href="maps-google.html">Google Maps</a>
+                  </li>
+                  <li>
+                    <a href="maps-vector.html">Vector Maps</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="side-nav-item">
+              <a
+                data-bs-toggle="collapse"
+                href="#sidebarMultiLevel"
+                aria-expanded="false"
+                aria-controls="sidebarMultiLevel"
+                class="side-nav-link"
+              >
+                <i class="uil-folder-plus"></i>
+                <span> Multi Level </span>
+                <span class="menu-arrow"></span>
+              </a>
+              <div class="collapse" id="sidebarMultiLevel">
+                <ul class="side-nav-second-level">
+                  <li class="side-nav-item">
+                    <a
+                      data-bs-toggle="collapse"
+                      href="#sidebarSecondLevel"
+                      aria-expanded="false"
+                      aria-controls="sidebarSecondLevel"
+                    >
+                      <span> Second Level </span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarSecondLevel">
+                      <ul class="side-nav-third-level">
+                        <li>
+                          <a href="javascript: void(0);">Item 1</a>
+                        </li>
+                        <li>
+                          <a href="javascript: void(0);">Item 2</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="side-nav-item">
+                    <a
+                      data-bs-toggle="collapse"
+                      href="#sidebarThirdLevel"
+                      aria-expanded="false"
+                      aria-controls="sidebarThirdLevel"
+                    >
+                      <span> Third Level </span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarThirdLevel">
+                      <ul class="side-nav-third-level">
+                        <li>
+                          <a href="javascript: void(0);">Item 1</a>
+                        </li>
+                        <li class="side-nav-item">
+                          <a
+                            data-bs-toggle="collapse"
+                            href="#sidebarFourthLevel"
+                            aria-expanded="false"
+                            aria-controls="sidebarFourthLevel"
+                          >
+                            <span> Item 2 </span>
+                            <span class="menu-arrow"></span>
+                          </a>
+                          <div class="collapse" id="sidebarFourthLevel">
+                            <ul class="side-nav-forth-level">
+                              <li>
+                                <a href="javascript: void(0);">Item 2.1</a>
+                              </li>
+                              <li>
+                                <a href="javascript: void(0);">Item 2.2</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          
+
+          <div class="help-box text-white text-center">
+            <a
+              href="javascript: void(0);"
+              class="float-end close-btn text-white"
+            >
+              <i class="mdi mdi-close"></i>
+            </a>
+            <img
+              src="{{ url_for('static', filename='/images/help-icon.svg') }}"
+              height="90"
+              alt="Helper Icon Image"
+            />
+            <h5 class="mt-3">Unlimited Access</h5>
+            <p class="mb-3">
+              Upgrade to plan to get access to unlimited reports
+            </p>
+            <a href="javascript: void(0);" class="btn btn-outline-light btn-sm"
+              >Upgrade</a
+            >
+          </div>
+
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="content-page">
+        <div class="content">
+          <div class="navbar-custom">
+            <ul class="list-unstyled topbar-menu float-end mb-0">
+              <li class="dropdown notification-list d-lg-none">
+                <a
+                  class="nav-link dropdown-toggle arrow-none"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                  <i class="dripicons-search noti-icon"></i>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-animated dropdown-lg p-0"
+                >
+                  <form class="p-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Search "
+                      aria-label="Recipient's username"
+                    />
+                  </form>
+                </div>
+              </li>
+              <li class="dropdown notification-list topbar-dropdown">
+                <a
+                  class="nav-link dropdown-toggle arrow-none"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="{{ url_for('static', filename='images/flags/us.jpg') }} "
+                    alt="user-image"
+                    class="me-0 me-sm-1"
+                    height="12"
+                  />
+                  <span class="align-middle d-none d-sm-inline-block"
+                    >English</span
+                  >
+                  <i
+                    class="
+                      mdi mdi-chevron-down
+                      d-none d-sm-inline-block
+                      align-middle
+                    "
+                  ></i>
+                </a>
+                <div
+                  class="
+                    dropdown-menu dropdown-menu-end dropdown-menu-animated
+                    topbar-dropdown-menu
+                  "
+                >
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <img
+                      src="{{ url_for('static', filename='/images/flags/germany.jpg') }}"
+                      alt="user-image"
+                      class="me-1"
+                      height="12"
+                    />
+                    <span class="align-middle">German</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <img
+                      src="{{ url_for('static', filename='/images/flags/italy.jpg') }}"
+                      alt="user-image"
+                      class="me-1"
+                      height="12"
+                    />
+                    <span class="align-middle">Italian</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <img
+                      src="{{ url_for('static', filename='/images/flags/spain.jpg') }}"
+                      alt="user-image"
+                      class="me-1"
+                      height="12"
+                    />
+                    <span class="align-middle">Spanish</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <img
+                      src="{{ url_for('static', filename='/images/flags/russia.jpg') }}"
+                      alt="user-image"
+                      class="me-1"
+                      height="12"
+                    />
+                    <span class="align-middle">Russian</span>
+                  </a>
+                </div>
+              </li>
+
+              <li class="dropdown notification-list">
+                <a
+                  class="nav-link dropdown-toggle arrow-none"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                  <i class="dripicons-bell noti-icon"></i>
+                  <span class="noti-icon-badge"></span>
+                </a>
+                <div
+                  class="
+                    dropdown-menu
+                    dropdown-menu-end
+                    dropdown-menu-animated
+                    dropdown-lg
+                  "
+                >
+                  <div class="dropdown-item noti-title">
+                    <h5 class="m-0">
+                      <span class="float-end">
+                        <a href="javascript: void(0);" class="text-dark">
+                          <small>Clear All</small>
+                        </a> </span
+                      >Notification
+                    </h5>
+                  </div>
+
+                  <div style="max-height: 230px" data-simplebar>
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon bg-primary">
+                        <i class="mdi mdi-comment-account-outline"></i>
+                      </div>
+                      <p class="notify-details">
+                        Caleb Flakelar commented on Admin
+                        <small class="text-muted">1 min ago</small>
+                      </p>
+                    </a>
+
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon bg-info">
+                        <i class="mdi mdi-account-plus"></i>
+                      </div>
+                      <p class="notify-details">
+                        New user registered.
+                        <small class="text-muted">5 hours ago</small>
+                      </p>
+                    </a>
+
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon">
+                        <img
+                          src="{{ url_for('static', filename='/images/users/avatar-2.jpg') }}"
+                          class="img-fluid rounded-circle"
+                          alt=""
+                        />
+                      </div>
+                      <p class="notify-details">Cristina Pride</p>
+                      <p class="text-muted mb-0 user-msg">
+                        <small
+                          >Hi, How are you? What about our next meeting</small
+                        >
+                      </p>
+                    </a>
+
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon bg-primary">
+                        <i class="mdi mdi-comment-account-outline"></i>
+                      </div>
+                      <p class="notify-details">
+                        Caleb Flakelar commented on Admin
+                        <small class="text-muted">4 days ago</small>
+                      </p>
+                    </a>
+
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon">
+                        <img
+                          src="{{ url_for('static', filename='/images/users/avatar-4.jpg') }}"
+                          class="img-fluid rounded-circle"
+                          alt=""
+                        />
+                      </div>
+                      <p class="notify-details">Karen Robinson</p>
+                      <p class="text-muted mb-0 user-msg">
+                        <small
+                          >Wow ! this admin looks good and awesome design</small
+                        >
+                      </p>
+                    </a>
+
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item"
+                    >
+                      <div class="notify-icon bg-info">
+                        <i class="mdi mdi-heart"></i>
+                      </div>
+                      <p class="notify-details">
+                        Carlos Crouch liked
+                        <b>Admin</b>
+                        <small class="text-muted">13 days ago</small>
+                      </p>
+                    </a>
+                  </div>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="
+                      dropdown-item
+                      text-center text-primary
+                      notify-item notify-all
+                    "
+                  >
+                    View All
+                  </a>
+                </div>
+              </li>
+
+              <li class="dropdown notification-list d-none d-sm-inline-block">
+                <a
+                  class="nav-link dropdown-toggle arrow-none"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                  <i class="dripicons-view-apps noti-icon"></i>
+                </a>
+                <div
+                  class="
+                    dropdown-menu
+                    dropdown-menu-end
+                    dropdown-menu-animated
+                    dropdown-lg
+                    p-0
+                  "
+                >
+                  <div class="p-2">
+                    <div class="row g-0">
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/slack.png') }}"
+                            alt="slack"
+                          />
+                          <span>Slack</span>
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/github.png') }}"
+                            alt="Github"
+                          />
+                          <span>GitHub</span>
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/dribbble.png') }}"
+                            alt="dribbble"
+                          />
+                          <span>Dribbble</span>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="row g-0">
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/bitbucket.png') }}"
+                            alt="bitbucket"
+                          />
+                          <span>Bitbucket</span>
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/dropbox.png') }}"
+                            alt="dropbox"
+                          />
+                          <span>Dropbox</span>
+                        </a>
+                      </div>
+                      <div class="col">
+                        <a class="dropdown-icon-item" href="#">
+                          <img
+                            src="{{ url_for('static', filename='/images/brands/g-suite.png') }}"
+                            alt="G Suite"
+                          />
+                          <span>G Suite</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="notification-list">
+                <a class="nav-link">
+                  <i
+                    class="dripicons-gear noti-icon"
+                    data-bs-toggle="offcanvas"
+                    href="#endbar-offcanvas"
+                    role="button"
+                    aria-controls="endbar-offcanvas"
+                  ></i>
+                </a>
+              </li>
+
+              <li class="dropdown notification-list">
+                <a
+                  class="nav-link dropdown-toggle nav-user arrow-none me-0"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                  <span class="account-user-avatar">
+                    <img
+                      src="{{ url_for('static', filename='/images/users/avatar-1.jpg') }}"
+                      alt="user-image"
+                      class="rounded-circle"
+                    />
+                  </span>
+                  <span>
+                    <span class="account-user-name">Dominic Keller</span>
+                    <span class="account-position">Founder</span>
+                  </span>
+                </a>
+                <div
+                  class="
+                    dropdown-menu dropdown-menu-end dropdown-menu-animated
+                    topbar-dropdown-menu
+                    profile-dropdown
+                  "
+                >
+                  <div class="dropdown-header noti-title">
+                    <h6 class="text-overflow m-0">Welcome !</h6>
+                  </div>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <i class="mdi mdi-account-circle me-1"></i>
+                    <span>My Account</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <i class="mdi mdi-account-edit me-1"></i>
+                    <span>Settings</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <i class="mdi mdi-lifebuoy me-1"></i>
+                    <span>Support</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <i class="mdi mdi-lock-outline me-1"></i>
+                    <span>Lock Screen</span>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <i class="mdi mdi-logout me-1"></i>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </li>
+            </ul>
+            <button class="button-menu-mobile open-left">
+              <i class="mdi mdi-menu"></i>
+            </button>
+            <div class="app-search dropdown d-none d-lg-block">
+              <form>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control dropdown-toggle"
+                    placeholder="Search.."
+                    id="top-search"
+                  />
+                  <span class="mdi mdi-magnify search-icon"></span>
+                  <button class="input-group-text btn-primary" type="submit">
+                    Search
+                  </button>
+                </div>
+              </form>
+
+              <div
+                class="dropdown-menu dropdown-menu-animated dropdown-lg"
+                id="search-dropdown"
+              >
+                <div class="dropdown-header noti-title">
+                  <h5 class="text-overflow mb-2">
+                    Found <span class="text-danger">17</span> results
+                  </h5>
+                </div>
+
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <i class="uil-notes font-16 me-1"></i>
+                  <span>Analytics Report</span>
+                </a>
+
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <i class="uil-life-ring font-16 me-1"></i>
+                  <span>How can I help you?</span>
+                </a>
+
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <i class="uil-cog font-16 me-1"></i>
+                  <span>User profile settings</span>
+                </a>
+
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow mb-2 text-uppercase">Users</h6>
+                </div>
+
+                <div class="notification-list">
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <div class="d-flex">
+                      <img
+                        class="d-flex me-2 rounded-circle"
+                        src="{{ url_for('static', filename='/images/users/avatar-2.jpg') }}"
+                        alt="Generic placeholder image"
+                        height="32"
+                      />
+                      <div class="w-100">
+                        <h5 class="m-0 font-14">Erwin Brown</h5>
+                        <span class="font-12 mb-0">UI Designer</span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item notify-item"
+                  >
+                    <div class="d-flex">
+                      <img
+                        class="d-flex me-2 rounded-circle"
+                        src="{{ url_for('static', filename='/images/users/avatar-5.jpg') }}"
+                        alt="Generic placeholder image"
+                        height="32"
+                      />
+                      <div class="w-100">
+                        <h5 class="m-0 font-14">Jacob Deo</h5>
+                        <span class="font-12 mb-0">Developer</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          
+
+
+
+          
+          <div class="container-fluid">
+              
+            <div class="row">
+                
+              <div class="col-12">
+                  <br>
+        
+              </div>
+            </div>
+            <div class="row">
+        
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Campaign Sent</h5>
+                                    <h3 class="my-2 py-1">9,184</h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-end" style="position: relative;">
+                                        <div id="campaign-sent-chart" data-colors="#727cf5" style="min-height: 60px;"><div id="apexchartsrxviy50hi" class="apexcharts-canvas apexchartsrxviy50hi apexcharts-theme-light" style="width: 92px; height: 60px;"><svg id="SvgjsSvg1595" width="92" height="60" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1597" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1596"><linearGradient id="SvgjsLinearGradient1601" x1="0" y1="0" x2="0" y2="1"><stop id="SvgjsStop1602" stop-opacity="0.4" stop-color="rgba(216,227,240,0.4)" offset="0"></stop><stop id="SvgjsStop1603" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop><stop id="SvgjsStop1604" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop></linearGradient><clipPath id="gridRectMaskrxviy50hi"><rect id="SvgjsRect1607" width="96" height="60" x="-2" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMaskrxviy50hi"><rect id="SvgjsRect1608" width="96" height="64" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><line id="SvgjsLine1606" x1="11.645442615855824" y1="0" x2="11.645442615855824" y2="60" stroke-dasharray="3" class="apexcharts-xcrosshairs" x="11.645442615855824" y="0" width="1" height="60" fill="url(#SvgjsLinearGradient1601)" filter="none" fill-opacity="0.9" stroke-width="0"></line><g id="SvgjsG1623" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1624" class="apexcharts-xaxis-texts-g" transform="translate(0, 2.75)"></g></g><g id="SvgjsG1626" class="apexcharts-grid"><g id="SvgjsG1627" class="apexcharts-gridlines-horizontal" style="display: none;"><line id="SvgjsLine1629" x1="0" y1="0" x2="92" y2="0" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1630" x1="0" y1="12" x2="92" y2="12" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1631" x1="0" y1="24" x2="92" y2="24" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1632" x1="0" y1="36" x2="92" y2="36" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1633" x1="0" y1="48" x2="92" y2="48" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1634" x1="0" y1="60" x2="92" y2="60" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line></g><g id="SvgjsG1628" class="apexcharts-gridlines-vertical" style="display: none;"></g><line id="SvgjsLine1636" x1="0" y1="60" x2="92" y2="60" stroke="transparent" stroke-dasharray="0"></line><line id="SvgjsLine1635" x1="0" y1="1" x2="0" y2="60" stroke="transparent" stroke-dasharray="0"></line></g><g id="SvgjsG1609" class="apexcharts-bar-series apexcharts-plot-series"><g id="SvgjsG1610" class="apexcharts-series" rel="1" seriesName="seriesx1" data:realIndex="0"><path id="SvgjsPath1612" d="M 1.6727272727272724 60L 1.6727272727272724 45L 6.690909090909091 45L 6.690909090909091 45L 6.690909090909091 60L 6.690909090909091 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 1.6727272727272724 60L 1.6727272727272724 45L 6.690909090909091 45L 6.690909090909091 45L 6.690909090909091 60L 6.690909090909091 60z" pathFrom="M 1.6727272727272724 60L 1.6727272727272724 60L 6.690909090909091 60L 6.690909090909091 60L 6.690909090909091 60L 1.6727272727272724 60" cy="45" cx="10.036363636363635" j="0" val="25" barHeight="15" barWidth="5.0181818181818185"></path><path id="SvgjsPath1613" d="M 10.036363636363635 60L 10.036363636363635 20.4L 15.054545454545455 20.4L 15.054545454545455 20.4L 15.054545454545455 60L 15.054545454545455 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 10.036363636363635 60L 10.036363636363635 20.4L 15.054545454545455 20.4L 15.054545454545455 20.4L 15.054545454545455 60L 15.054545454545455 60z" pathFrom="M 10.036363636363635 60L 10.036363636363635 60L 15.054545454545455 60L 15.054545454545455 60L 15.054545454545455 60L 10.036363636363635 60" cy="20.4" cx="18.4" j="1" val="66" barHeight="39.6" barWidth="5.0181818181818185"></path><path id="SvgjsPath1614" d="M 18.4 60L 18.4 35.400000000000006L 23.418181818181818 35.400000000000006L 23.418181818181818 35.400000000000006L 23.418181818181818 60L 23.418181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 18.4 60L 18.4 35.400000000000006L 23.418181818181818 35.400000000000006L 23.418181818181818 35.400000000000006L 23.418181818181818 60L 23.418181818181818 60z" pathFrom="M 18.4 60L 18.4 60L 23.418181818181818 60L 23.418181818181818 60L 23.418181818181818 60L 18.4 60" cy="35.400000000000006" cx="26.763636363636362" j="2" val="41" barHeight="24.599999999999998" barWidth="5.0181818181818185"></path><path id="SvgjsPath1615" d="M 26.763636363636362 60L 26.763636363636362 6.600000000000001L 31.78181818181818 6.600000000000001L 31.78181818181818 6.600000000000001L 31.78181818181818 60L 31.78181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 26.763636363636362 60L 26.763636363636362 6.600000000000001L 31.78181818181818 6.600000000000001L 31.78181818181818 6.600000000000001L 31.78181818181818 60L 31.78181818181818 60z" pathFrom="M 26.763636363636362 60L 26.763636363636362 60L 31.78181818181818 60L 31.78181818181818 60L 31.78181818181818 60L 26.763636363636362 60" cy="6.600000000000001" cx="35.127272727272725" j="3" val="89" barHeight="53.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1616" d="M 35.127272727272725 60L 35.127272727272725 22.200000000000003L 40.14545454545454 22.200000000000003L 40.14545454545454 22.200000000000003L 40.14545454545454 60L 40.14545454545454 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 35.127272727272725 60L 35.127272727272725 22.200000000000003L 40.14545454545454 22.200000000000003L 40.14545454545454 22.200000000000003L 40.14545454545454 60L 40.14545454545454 60z" pathFrom="M 35.127272727272725 60L 35.127272727272725 60L 40.14545454545454 60L 40.14545454545454 60L 40.14545454545454 60L 35.127272727272725 60" cy="22.200000000000003" cx="43.490909090909085" j="4" val="63" barHeight="37.8" barWidth="5.0181818181818185"></path><path id="SvgjsPath1617" d="M 43.490909090909085 60L 43.490909090909085 45L 48.5090909090909 45L 48.5090909090909 45L 48.5090909090909 60L 48.5090909090909 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 43.490909090909085 60L 43.490909090909085 45L 48.5090909090909 45L 48.5090909090909 45L 48.5090909090909 60L 48.5090909090909 60z" pathFrom="M 43.490909090909085 60L 43.490909090909085 60L 48.5090909090909 60L 48.5090909090909 60L 48.5090909090909 60L 43.490909090909085 60" cy="45" cx="51.854545454545445" j="5" val="25" barHeight="15" barWidth="5.0181818181818185"></path><path id="SvgjsPath1618" d="M 51.854545454545445 60L 51.854545454545445 33.6L 56.87272727272726 33.6L 56.87272727272726 33.6L 56.87272727272726 60L 56.87272727272726 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 51.854545454545445 60L 51.854545454545445 33.6L 56.87272727272726 33.6L 56.87272727272726 33.6L 56.87272727272726 60L 56.87272727272726 60z" pathFrom="M 51.854545454545445 60L 51.854545454545445 60L 56.87272727272726 60L 56.87272727272726 60L 56.87272727272726 60L 51.854545454545445 60" cy="33.6" cx="60.218181818181804" j="6" val="44" barHeight="26.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1619" d="M 60.218181818181804 60L 60.218181818181804 52.8L 65.23636363636362 52.8L 65.23636363636362 52.8L 65.23636363636362 60L 65.23636363636362 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 60.218181818181804 60L 60.218181818181804 52.8L 65.23636363636362 52.8L 65.23636363636362 52.8L 65.23636363636362 60L 65.23636363636362 60z" pathFrom="M 60.218181818181804 60L 60.218181818181804 60L 65.23636363636362 60L 65.23636363636362 60L 65.23636363636362 60L 60.218181818181804 60" cy="52.8" cx="68.58181818181816" j="7" val="12" barHeight="7.199999999999999" barWidth="5.0181818181818185"></path><path id="SvgjsPath1620" d="M 68.58181818181816 60L 68.58181818181816 38.400000000000006L 73.59999999999998 38.400000000000006L 73.59999999999998 38.400000000000006L 73.59999999999998 60L 73.59999999999998 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 68.58181818181816 60L 68.58181818181816 38.400000000000006L 73.59999999999998 38.400000000000006L 73.59999999999998 38.400000000000006L 73.59999999999998 60L 73.59999999999998 60z" pathFrom="M 68.58181818181816 60L 68.58181818181816 60L 73.59999999999998 60L 73.59999999999998 60L 73.59999999999998 60L 68.58181818181816 60" cy="38.400000000000006" cx="76.94545454545452" j="8" val="36" barHeight="21.599999999999998" barWidth="5.0181818181818185"></path><path id="SvgjsPath1621" d="M 76.94545454545452 60L 76.94545454545452 54.6L 81.96363636363634 54.6L 81.96363636363634 54.6L 81.96363636363634 60L 81.96363636363634 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 76.94545454545452 60L 76.94545454545452 54.6L 81.96363636363634 54.6L 81.96363636363634 54.6L 81.96363636363634 60L 81.96363636363634 60z" pathFrom="M 76.94545454545452 60L 76.94545454545452 60L 81.96363636363634 60L 81.96363636363634 60L 81.96363636363634 60L 76.94545454545452 60" cy="54.6" cx="85.30909090909088" j="9" val="9" barHeight="5.3999999999999995" barWidth="5.0181818181818185"></path><path id="SvgjsPath1622" d="M 85.30909090909088 60L 85.30909090909088 27.6L 90.3272727272727 27.6L 90.3272727272727 27.6L 90.3272727272727 60L 90.3272727272727 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskrxviy50hi)" pathTo="M 85.30909090909088 60L 85.30909090909088 27.6L 90.3272727272727 27.6L 90.3272727272727 27.6L 90.3272727272727 60L 90.3272727272727 60z" pathFrom="M 85.30909090909088 60L 85.30909090909088 60L 90.3272727272727 60L 90.3272727272727 60L 90.3272727272727 60L 85.30909090909088 60" cy="27.6" cx="93.67272727272724" j="10" val="54" barHeight="32.4" barWidth="5.0181818181818185"></path></g><g id="SvgjsG1611" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1637" x1="0" y1="0" x2="92" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1638" x1="0" y1="0" x2="92" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1639" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1640" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1641" class="apexcharts-point-annotations"></g></g><rect id="SvgjsRect1605" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect><g id="SvgjsG1625" class="apexcharts-yaxis" rel="0" transform="translate(-18, 0)"></g><g id="SvgjsG1598" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div><div class="apexcharts-tooltip apexcharts-theme-light" style="left: 12.1454px; top: 2.5px;"><div class="apexcharts-tooltip-series-group apexcharts-active" style="display: flex;"><span class="apexcharts-tooltip-marker" style="background-color: rgb(114, 124, 245); display: none;"></span><div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value">66</span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light"><div class="apexcharts-yaxistooltip-text"></div></div></div></div>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 93px; height: 61px;"></div></div><div class="contract-trigger"></div></div></div>
+                                </div>
+                            </div> <!-- end row-->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div> <!-- end col -->
+
+                <div class="col-md-6 col-xxl-3">
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="New Leads">New Leads</h5>
+                                    <h3 class="my-2 py-1">3,254</h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.38%</span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-end" style="position: relative;">
+                                        <div id="new-leads-chart" data-colors="#727cf5" style="min-height: 60px;"><div id="apexcharts59wtx5do" class="apexcharts-canvas apexcharts59wtx5do apexcharts-theme-light" style="width: 92px; height: 60px;"><svg id="SvgjsSvg1651" width="92" height="60" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1653" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1652"><clipPath id="gridRectMask59wtx5do"><rect id="SvgjsRect1659" width="98" height="62" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMask59wtx5do"><rect id="SvgjsRect1660" width="96" height="64" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><line id="SvgjsLine1658" x1="0" y1="0" x2="0" y2="60" stroke="#b6b6b6" stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0" width="1" height="60" fill="#b1b9c4" filter="none" fill-opacity="0.9" stroke-width="1"></line><g id="SvgjsG1666" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1667" class="apexcharts-xaxis-texts-g" transform="translate(0, 2.75)"></g></g><g id="SvgjsG1669" class="apexcharts-grid"><g id="SvgjsG1670" class="apexcharts-gridlines-horizontal" style="display: none;"><line id="SvgjsLine1672" x1="0" y1="0" x2="92" y2="0" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1673" x1="0" y1="12" x2="92" y2="12" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1674" x1="0" y1="24" x2="92" y2="24" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1675" x1="0" y1="36" x2="92" y2="36" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1676" x1="0" y1="48" x2="92" y2="48" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1677" x1="0" y1="60" x2="92" y2="60" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line></g><g id="SvgjsG1671" class="apexcharts-gridlines-vertical" style="display: none;"></g><line id="SvgjsLine1679" x1="0" y1="60" x2="92" y2="60" stroke="transparent" stroke-dasharray="0"></line><line id="SvgjsLine1678" x1="0" y1="1" x2="0" y2="60" stroke="transparent" stroke-dasharray="0"></line></g><g id="SvgjsG1661" class="apexcharts-line-series apexcharts-plot-series"><g id="SvgjsG1662" class="apexcharts-series" seriesName="seriesx1" data:longestSeries="true" rel="1" data:realIndex="0"><path id="SvgjsPath1665" d="M 0 45C 3.22 45 5.98 20.4 9.200000000000001 20.4C 12.420000000000002 20.4 15.180000000000001 35.400000000000006 18.400000000000002 35.400000000000006C 21.62 35.400000000000006 24.380000000000003 6.600000000000001 27.6 6.600000000000001C 30.82 6.600000000000001 33.580000000000005 22.200000000000003 36.800000000000004 22.200000000000003C 40.02 22.200000000000003 42.78 45 46 45C 49.22 45 51.980000000000004 33.6 55.2 33.6C 58.42 33.6 61.18000000000001 52.8 64.4 52.8C 67.62 52.8 70.38000000000001 38.400000000000006 73.60000000000001 38.400000000000006C 76.82000000000001 38.400000000000006 79.58 54.6 82.8 54.6C 86.02 54.6 88.78 27.6 92 27.6" fill="none" fill-opacity="1" stroke="rgba(114,124,245,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="2" stroke-dasharray="0" class="apexcharts-line" index="0" clip-path="url(#gridRectMask59wtx5do)" pathTo="M 0 45C 3.22 45 5.98 20.4 9.200000000000001 20.4C 12.420000000000002 20.4 15.180000000000001 35.400000000000006 18.400000000000002 35.400000000000006C 21.62 35.400000000000006 24.380000000000003 6.600000000000001 27.6 6.600000000000001C 30.82 6.600000000000001 33.580000000000005 22.200000000000003 36.800000000000004 22.200000000000003C 40.02 22.200000000000003 42.78 45 46 45C 49.22 45 51.980000000000004 33.6 55.2 33.6C 58.42 33.6 61.18000000000001 52.8 64.4 52.8C 67.62 52.8 70.38000000000001 38.400000000000006 73.60000000000001 38.400000000000006C 76.82000000000001 38.400000000000006 79.58 54.6 82.8 54.6C 86.02 54.6 88.78 27.6 92 27.6" pathFrom="M -1 60L -1 60L 9.200000000000001 60L 18.400000000000002 60L 27.6 60L 36.800000000000004 60L 46 60L 55.2 60L 64.4 60L 73.60000000000001 60L 82.8 60L 92 60"></path><g id="SvgjsG1663" class="apexcharts-series-markers-wrap" data:realIndex="0"><g class="apexcharts-series-markers"><circle id="SvgjsCircle1685" r="0" cx="0" cy="0" class="apexcharts-marker wisy5o6th no-pointer-events" stroke="#ffffff" fill="#727cf5" fill-opacity="1" stroke-width="2" stroke-opacity="0.9" default-marker-size="0"></circle></g></g></g><g id="SvgjsG1664" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1680" x1="0" y1="0" x2="92" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1681" x1="0" y1="0" x2="92" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1682" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1683" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1684" class="apexcharts-point-annotations"></g></g><rect id="SvgjsRect1657" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect><g id="SvgjsG1668" class="apexcharts-yaxis" rel="0" transform="translate(-18, 0)"></g><g id="SvgjsG1654" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div><div class="apexcharts-tooltip apexcharts-theme-light"><div class="apexcharts-tooltip-series-group"><span class="apexcharts-tooltip-marker" style="background-color: rgb(114, 124, 245);"></span><div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light"><div class="apexcharts-yaxistooltip-text"></div></div></div></div>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 93px; height: 61px;"></div></div><div class="contract-trigger"></div></div></div>
+                                </div>
+                            </div> <!-- end row-->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div> <!-- end col -->
+
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Deals">Deals</h5>
+                                    <h3 class="my-2 py-1">861</h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 4.87%</span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-end" style="position: relative;">
+                                        <div id="deals-chart" data-colors="#727cf5" style="min-height: 60px;"><div id="apexchartsti44qp8l" class="apexcharts-canvas apexchartsti44qp8l apexcharts-theme-light" style="width: 92px; height: 60px;"><svg id="SvgjsSvg1694" width="92" height="60" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1696" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1695"><linearGradient id="SvgjsLinearGradient1700" x1="0" y1="0" x2="0" y2="1"><stop id="SvgjsStop1701" stop-opacity="0.4" stop-color="rgba(216,227,240,0.4)" offset="0"></stop><stop id="SvgjsStop1702" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop><stop id="SvgjsStop1703" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop></linearGradient><clipPath id="gridRectMaskti44qp8l"><rect id="SvgjsRect1706" width="96" height="60" x="-2" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMaskti44qp8l"><rect id="SvgjsRect1707" width="96" height="64" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><line id="SvgjsLine1705" x1="0" y1="0" x2="0" y2="60" stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0" width="1" height="60" fill="url(#SvgjsLinearGradient1700)" filter="none" fill-opacity="0.9" stroke-width="0"></line><g id="SvgjsG1722" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1723" class="apexcharts-xaxis-texts-g" transform="translate(0, 2.75)"></g></g><g id="SvgjsG1725" class="apexcharts-grid"><g id="SvgjsG1726" class="apexcharts-gridlines-horizontal" style="display: none;"><line id="SvgjsLine1728" x1="0" y1="0" x2="92" y2="0" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1729" x1="0" y1="15" x2="92" y2="15" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1730" x1="0" y1="30" x2="92" y2="30" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1731" x1="0" y1="45" x2="92" y2="45" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1732" x1="0" y1="60" x2="92" y2="60" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line></g><g id="SvgjsG1727" class="apexcharts-gridlines-vertical" style="display: none;"></g><line id="SvgjsLine1734" x1="0" y1="60" x2="92" y2="60" stroke="transparent" stroke-dasharray="0"></line><line id="SvgjsLine1733" x1="0" y1="1" x2="0" y2="60" stroke="transparent" stroke-dasharray="0"></line></g><g id="SvgjsG1708" class="apexcharts-bar-series apexcharts-plot-series"><g id="SvgjsG1709" class="apexcharts-series" rel="1" seriesName="seriesx1" data:realIndex="0"><path id="SvgjsPath1711" d="M 1.6727272727272724 60L 1.6727272727272724 51L 6.690909090909091 51L 6.690909090909091 51L 6.690909090909091 60L 6.690909090909091 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 1.6727272727272724 60L 1.6727272727272724 51L 6.690909090909091 51L 6.690909090909091 51L 6.690909090909091 60L 6.690909090909091 60z" pathFrom="M 1.6727272727272724 60L 1.6727272727272724 60L 6.690909090909091 60L 6.690909090909091 60L 6.690909090909091 60L 1.6727272727272724 60" cy="51" cx="10.036363636363635" j="0" val="12" barHeight="9" barWidth="5.0181818181818185"></path><path id="SvgjsPath1712" d="M 10.036363636363635 60L 10.036363636363635 49.5L 15.054545454545455 49.5L 15.054545454545455 49.5L 15.054545454545455 60L 15.054545454545455 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 10.036363636363635 60L 10.036363636363635 49.5L 15.054545454545455 49.5L 15.054545454545455 49.5L 15.054545454545455 60L 15.054545454545455 60z" pathFrom="M 10.036363636363635 60L 10.036363636363635 60L 15.054545454545455 60L 15.054545454545455 60L 15.054545454545455 60L 10.036363636363635 60" cy="49.5" cx="18.4" j="1" val="14" barHeight="10.5" barWidth="5.0181818181818185"></path><path id="SvgjsPath1713" d="M 18.4 60L 18.4 58.5L 23.418181818181818 58.5L 23.418181818181818 58.5L 23.418181818181818 60L 23.418181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 18.4 60L 18.4 58.5L 23.418181818181818 58.5L 23.418181818181818 58.5L 23.418181818181818 60L 23.418181818181818 60z" pathFrom="M 18.4 60L 18.4 60L 23.418181818181818 60L 23.418181818181818 60L 23.418181818181818 60L 18.4 60" cy="58.5" cx="26.763636363636362" j="2" val="2" barHeight="1.5" barWidth="5.0181818181818185"></path><path id="SvgjsPath1714" d="M 26.763636363636362 60L 26.763636363636362 24.75L 31.78181818181818 24.75L 31.78181818181818 24.75L 31.78181818181818 60L 31.78181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 26.763636363636362 60L 26.763636363636362 24.75L 31.78181818181818 24.75L 31.78181818181818 24.75L 31.78181818181818 60L 31.78181818181818 60z" pathFrom="M 26.763636363636362 60L 26.763636363636362 60L 31.78181818181818 60L 31.78181818181818 60L 31.78181818181818 60L 26.763636363636362 60" cy="24.75" cx="35.127272727272725" j="3" val="47" barHeight="35.25" barWidth="5.0181818181818185"></path><path id="SvgjsPath1715" d="M 35.127272727272725 60L 35.127272727272725 28.5L 40.14545454545454 28.5L 40.14545454545454 28.5L 40.14545454545454 60L 40.14545454545454 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 35.127272727272725 60L 35.127272727272725 28.5L 40.14545454545454 28.5L 40.14545454545454 28.5L 40.14545454545454 60L 40.14545454545454 60z" pathFrom="M 35.127272727272725 60L 35.127272727272725 60L 40.14545454545454 60L 40.14545454545454 60L 40.14545454545454 60L 35.127272727272725 60" cy="28.5" cx="43.490909090909085" j="4" val="42" barHeight="31.5" barWidth="5.0181818181818185"></path><path id="SvgjsPath1716" d="M 43.490909090909085 60L 43.490909090909085 48.75L 48.5090909090909 48.75L 48.5090909090909 48.75L 48.5090909090909 60L 48.5090909090909 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 43.490909090909085 60L 43.490909090909085 48.75L 48.5090909090909 48.75L 48.5090909090909 48.75L 48.5090909090909 60L 48.5090909090909 60z" pathFrom="M 43.490909090909085 60L 43.490909090909085 60L 48.5090909090909 60L 48.5090909090909 60L 48.5090909090909 60L 43.490909090909085 60" cy="48.75" cx="51.854545454545445" j="5" val="15" barHeight="11.25" barWidth="5.0181818181818185"></path><path id="SvgjsPath1717" d="M 51.854545454545445 60L 51.854545454545445 24.75L 56.87272727272726 24.75L 56.87272727272726 24.75L 56.87272727272726 60L 56.87272727272726 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 51.854545454545445 60L 51.854545454545445 24.75L 56.87272727272726 24.75L 56.87272727272726 24.75L 56.87272727272726 60L 56.87272727272726 60z" pathFrom="M 51.854545454545445 60L 51.854545454545445 60L 56.87272727272726 60L 56.87272727272726 60L 56.87272727272726 60L 51.854545454545445 60" cy="24.75" cx="60.218181818181804" j="6" val="47" barHeight="35.25" barWidth="5.0181818181818185"></path><path id="SvgjsPath1718" d="M 60.218181818181804 60L 60.218181818181804 3.75L 65.23636363636362 3.75L 65.23636363636362 3.75L 65.23636363636362 60L 65.23636363636362 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 60.218181818181804 60L 60.218181818181804 3.75L 65.23636363636362 3.75L 65.23636363636362 3.75L 65.23636363636362 60L 65.23636363636362 60z" pathFrom="M 60.218181818181804 60L 60.218181818181804 60L 65.23636363636362 60L 65.23636363636362 60L 65.23636363636362 60L 60.218181818181804 60" cy="3.75" cx="68.58181818181816" j="7" val="75" barHeight="56.25" barWidth="5.0181818181818185"></path><path id="SvgjsPath1719" d="M 68.58181818181816 60L 68.58181818181816 11.25L 73.59999999999998 11.25L 73.59999999999998 11.25L 73.59999999999998 60L 73.59999999999998 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 68.58181818181816 60L 68.58181818181816 11.25L 73.59999999999998 11.25L 73.59999999999998 11.25L 73.59999999999998 60L 73.59999999999998 60z" pathFrom="M 68.58181818181816 60L 68.58181818181816 60L 73.59999999999998 60L 73.59999999999998 60L 73.59999999999998 60L 68.58181818181816 60" cy="11.25" cx="76.94545454545452" j="8" val="65" barHeight="48.75" barWidth="5.0181818181818185"></path><path id="SvgjsPath1720" d="M 76.94545454545452 60L 76.94545454545452 45.75L 81.96363636363634 45.75L 81.96363636363634 45.75L 81.96363636363634 60L 81.96363636363634 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 76.94545454545452 60L 76.94545454545452 45.75L 81.96363636363634 45.75L 81.96363636363634 45.75L 81.96363636363634 60L 81.96363636363634 60z" pathFrom="M 76.94545454545452 60L 76.94545454545452 60L 81.96363636363634 60L 81.96363636363634 60L 81.96363636363634 60L 76.94545454545452 60" cy="45.75" cx="85.30909090909088" j="9" val="19" barHeight="14.25" barWidth="5.0181818181818185"></path><path id="SvgjsPath1721" d="M 85.30909090909088 60L 85.30909090909088 49.5L 90.3272727272727 49.5L 90.3272727272727 49.5L 90.3272727272727 60L 90.3272727272727 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMaskti44qp8l)" pathTo="M 85.30909090909088 60L 85.30909090909088 49.5L 90.3272727272727 49.5L 90.3272727272727 49.5L 90.3272727272727 60L 90.3272727272727 60z" pathFrom="M 85.30909090909088 60L 85.30909090909088 60L 90.3272727272727 60L 90.3272727272727 60L 90.3272727272727 60L 85.30909090909088 60" cy="49.5" cx="93.67272727272724" j="10" val="14" barHeight="10.5" barWidth="5.0181818181818185"></path></g><g id="SvgjsG1710" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1735" x1="0" y1="0" x2="92" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1736" x1="0" y1="0" x2="92" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1737" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1738" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1739" class="apexcharts-point-annotations"></g></g><rect id="SvgjsRect1704" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect><g id="SvgjsG1724" class="apexcharts-yaxis" rel="0" transform="translate(-18, 0)"></g><g id="SvgjsG1697" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div><div class="apexcharts-tooltip apexcharts-theme-light"><div class="apexcharts-tooltip-series-group"><span class="apexcharts-tooltip-marker" style="background-color: rgb(114, 124, 245);"></span><div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light"><div class="apexcharts-yaxistooltip-text"></div></div></div></div>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 93px; height: 61px;"></div></div><div class="contract-trigger"></div></div></div>
+                                </div>
+                            </div> <!-- end row-->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div> <!-- end col -->
+
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Booked Revenue</h5>
+                                    <h3 class="my-2 py-1">$253k</h3>
+                                    <p class="mb-0 text-muted">
+                                        <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 11.7%</span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-end" style="position: relative;">
+                                        <div id="booked-revenue-chart" data-colors="#727cf5" style="min-height: 60px;"><div id="apexcharts0p60mpw5" class="apexcharts-canvas apexcharts0p60mpw5 apexcharts-theme-light" style="width: 92px; height: 60px;"><svg id="SvgjsSvg1740" width="92" height="60" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1742" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1741"><linearGradient id="SvgjsLinearGradient1746" x1="0" y1="0" x2="0" y2="1"><stop id="SvgjsStop1747" stop-opacity="0.4" stop-color="rgba(216,227,240,0.4)" offset="0"></stop><stop id="SvgjsStop1748" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop><stop id="SvgjsStop1749" stop-opacity="0.5" stop-color="rgba(190,209,230,0.5)" offset="1"></stop></linearGradient><clipPath id="gridRectMask0p60mpw5"><rect id="SvgjsRect1752" width="96" height="60" x="-2" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMask0p60mpw5"><rect id="SvgjsRect1753" width="96" height="64" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><line id="SvgjsLine1751" x1="0" y1="0" x2="0" y2="60" stroke-dasharray="3" class="apexcharts-xcrosshairs" x="0" y="0" width="1" height="60" fill="url(#SvgjsLinearGradient1746)" filter="none" fill-opacity="0.9" stroke-width="0"></line><g id="SvgjsG1768" class="apexcharts-xaxis" transform="translate(0, 0)"><g id="SvgjsG1769" class="apexcharts-xaxis-texts-g" transform="translate(0, 2.75)"></g></g><g id="SvgjsG1771" class="apexcharts-grid"><g id="SvgjsG1772" class="apexcharts-gridlines-horizontal" style="display: none;"><line id="SvgjsLine1774" x1="0" y1="0" x2="92" y2="0" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1775" x1="0" y1="12" x2="92" y2="12" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1776" x1="0" y1="24" x2="92" y2="24" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1777" x1="0" y1="36" x2="92" y2="36" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1778" x1="0" y1="48" x2="92" y2="48" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line><line id="SvgjsLine1779" x1="0" y1="60" x2="92" y2="60" stroke="#e0e0e0" stroke-dasharray="0" class="apexcharts-gridline"></line></g><g id="SvgjsG1773" class="apexcharts-gridlines-vertical" style="display: none;"></g><line id="SvgjsLine1781" x1="0" y1="60" x2="92" y2="60" stroke="transparent" stroke-dasharray="0"></line><line id="SvgjsLine1780" x1="0" y1="1" x2="0" y2="60" stroke="transparent" stroke-dasharray="0"></line></g><g id="SvgjsG1754" class="apexcharts-bar-series apexcharts-plot-series"><g id="SvgjsG1755" class="apexcharts-series" rel="1" seriesName="seriesx1" data:realIndex="0"><path id="SvgjsPath1757" d="M 1.6727272727272724 60L 1.6727272727272724 31.8L 6.690909090909091 31.8L 6.690909090909091 31.8L 6.690909090909091 60L 6.690909090909091 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 1.6727272727272724 60L 1.6727272727272724 31.8L 6.690909090909091 31.8L 6.690909090909091 31.8L 6.690909090909091 60L 6.690909090909091 60z" pathFrom="M 1.6727272727272724 60L 1.6727272727272724 60L 6.690909090909091 60L 6.690909090909091 60L 6.690909090909091 60L 1.6727272727272724 60" cy="31.8" cx="10.036363636363635" j="0" val="47" barHeight="28.2" barWidth="5.0181818181818185"></path><path id="SvgjsPath1758" d="M 10.036363636363635 60L 10.036363636363635 33L 15.054545454545455 33L 15.054545454545455 33L 15.054545454545455 60L 15.054545454545455 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 10.036363636363635 60L 10.036363636363635 33L 15.054545454545455 33L 15.054545454545455 33L 15.054545454545455 60L 15.054545454545455 60z" pathFrom="M 10.036363636363635 60L 10.036363636363635 60L 15.054545454545455 60L 15.054545454545455 60L 15.054545454545455 60L 10.036363636363635 60" cy="33" cx="18.4" j="1" val="45" barHeight="27" barWidth="5.0181818181818185"></path><path id="SvgjsPath1759" d="M 18.4 60L 18.4 15.600000000000001L 23.418181818181818 15.600000000000001L 23.418181818181818 15.600000000000001L 23.418181818181818 60L 23.418181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 18.4 60L 18.4 15.600000000000001L 23.418181818181818 15.600000000000001L 23.418181818181818 15.600000000000001L 23.418181818181818 60L 23.418181818181818 60z" pathFrom="M 18.4 60L 18.4 60L 23.418181818181818 60L 23.418181818181818 60L 23.418181818181818 60L 18.4 60" cy="15.600000000000001" cx="26.763636363636362" j="2" val="74" barHeight="44.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1760" d="M 26.763636363636362 60L 26.763636363636362 51.6L 31.78181818181818 51.6L 31.78181818181818 51.6L 31.78181818181818 60L 31.78181818181818 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 26.763636363636362 60L 26.763636363636362 51.6L 31.78181818181818 51.6L 31.78181818181818 51.6L 31.78181818181818 60L 31.78181818181818 60z" pathFrom="M 26.763636363636362 60L 26.763636363636362 60L 31.78181818181818 60L 31.78181818181818 60L 31.78181818181818 60L 26.763636363636362 60" cy="51.6" cx="35.127272727272725" j="3" val="14" barHeight="8.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1761" d="M 35.127272727272725 60L 35.127272727272725 26.4L 40.14545454545454 26.4L 40.14545454545454 26.4L 40.14545454545454 60L 40.14545454545454 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 35.127272727272725 60L 35.127272727272725 26.4L 40.14545454545454 26.4L 40.14545454545454 26.4L 40.14545454545454 60L 40.14545454545454 60z" pathFrom="M 35.127272727272725 60L 35.127272727272725 60L 40.14545454545454 60L 40.14545454545454 60L 40.14545454545454 60L 35.127272727272725 60" cy="26.4" cx="43.490909090909085" j="4" val="56" barHeight="33.6" barWidth="5.0181818181818185"></path><path id="SvgjsPath1762" d="M 43.490909090909085 60L 43.490909090909085 15.600000000000001L 48.5090909090909 15.600000000000001L 48.5090909090909 15.600000000000001L 48.5090909090909 60L 48.5090909090909 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 43.490909090909085 60L 43.490909090909085 15.600000000000001L 48.5090909090909 15.600000000000001L 48.5090909090909 15.600000000000001L 48.5090909090909 60L 48.5090909090909 60z" pathFrom="M 43.490909090909085 60L 43.490909090909085 60L 48.5090909090909 60L 48.5090909090909 60L 48.5090909090909 60L 43.490909090909085 60" cy="15.600000000000001" cx="51.854545454545445" j="5" val="74" barHeight="44.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1763" d="M 51.854545454545445 60L 51.854545454545445 51.6L 56.87272727272726 51.6L 56.87272727272726 51.6L 56.87272727272726 60L 56.87272727272726 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 51.854545454545445 60L 51.854545454545445 51.6L 56.87272727272726 51.6L 56.87272727272726 51.6L 56.87272727272726 60L 56.87272727272726 60z" pathFrom="M 51.854545454545445 60L 51.854545454545445 60L 56.87272727272726 60L 56.87272727272726 60L 56.87272727272726 60L 51.854545454545445 60" cy="51.6" cx="60.218181818181804" j="6" val="14" barHeight="8.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1764" d="M 60.218181818181804 60L 60.218181818181804 53.4L 65.23636363636362 53.4L 65.23636363636362 53.4L 65.23636363636362 60L 65.23636363636362 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 60.218181818181804 60L 60.218181818181804 53.4L 65.23636363636362 53.4L 65.23636363636362 53.4L 65.23636363636362 60L 65.23636363636362 60z" pathFrom="M 60.218181818181804 60L 60.218181818181804 60L 65.23636363636362 60L 65.23636363636362 60L 65.23636363636362 60L 60.218181818181804 60" cy="53.4" cx="68.58181818181816" j="7" val="11" barHeight="6.6" barWidth="5.0181818181818185"></path><path id="SvgjsPath1765" d="M 68.58181818181816 60L 68.58181818181816 55.8L 73.59999999999998 55.8L 73.59999999999998 55.8L 73.59999999999998 60L 73.59999999999998 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 68.58181818181816 60L 68.58181818181816 55.8L 73.59999999999998 55.8L 73.59999999999998 55.8L 73.59999999999998 60L 73.59999999999998 60z" pathFrom="M 68.58181818181816 60L 68.58181818181816 60L 73.59999999999998 60L 73.59999999999998 60L 73.59999999999998 60L 68.58181818181816 60" cy="55.8" cx="76.94545454545452" j="8" val="7" barHeight="4.2" barWidth="5.0181818181818185"></path><path id="SvgjsPath1766" d="M 76.94545454545452 60L 76.94545454545452 36.6L 81.96363636363634 36.6L 81.96363636363634 36.6L 81.96363636363634 60L 81.96363636363634 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 76.94545454545452 60L 76.94545454545452 36.6L 81.96363636363634 36.6L 81.96363636363634 36.6L 81.96363636363634 60L 81.96363636363634 60z" pathFrom="M 76.94545454545452 60L 76.94545454545452 60L 81.96363636363634 60L 81.96363636363634 60L 81.96363636363634 60L 76.94545454545452 60" cy="36.6" cx="85.30909090909088" j="9" val="39" barHeight="23.4" barWidth="5.0181818181818185"></path><path id="SvgjsPath1767" d="M 85.30909090909088 60L 85.30909090909088 10.800000000000004L 90.3272727272727 10.800000000000004L 90.3272727272727 10.800000000000004L 90.3272727272727 60L 90.3272727272727 60z" fill="rgba(114,124,245,0.85)" fill-opacity="1" stroke-opacity="1" stroke-linecap="square" stroke-width="0" stroke-dasharray="0" class="apexcharts-bar-area" index="0" clip-path="url(#gridRectMask0p60mpw5)" pathTo="M 85.30909090909088 60L 85.30909090909088 10.800000000000004L 90.3272727272727 10.800000000000004L 90.3272727272727 10.800000000000004L 90.3272727272727 60L 90.3272727272727 60z" pathFrom="M 85.30909090909088 60L 85.30909090909088 60L 90.3272727272727 60L 90.3272727272727 60L 90.3272727272727 60L 85.30909090909088 60" cy="10.800000000000004" cx="93.67272727272724" j="10" val="82" barHeight="49.199999999999996" barWidth="5.0181818181818185"></path></g><g id="SvgjsG1756" class="apexcharts-datalabels" data:realIndex="0"></g></g><line id="SvgjsLine1782" x1="0" y1="0" x2="92" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1783" x1="0" y1="0" x2="92" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line><g id="SvgjsG1784" class="apexcharts-yaxis-annotations"></g><g id="SvgjsG1785" class="apexcharts-xaxis-annotations"></g><g id="SvgjsG1786" class="apexcharts-point-annotations"></g></g><rect id="SvgjsRect1750" width="0" height="0" x="0" y="0" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fefefe"></rect><g id="SvgjsG1770" class="apexcharts-yaxis" rel="0" transform="translate(-18, 0)"></g><g id="SvgjsG1743" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div><div class="apexcharts-tooltip apexcharts-theme-light"><div class="apexcharts-tooltip-series-group"><span class="apexcharts-tooltip-marker" style="background-color: rgb(114, 124, 245);"></span><div class="apexcharts-tooltip-text" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"><div class="apexcharts-tooltip-y-group"><span class="apexcharts-tooltip-text-label"></span><span class="apexcharts-tooltip-text-value"></span></div><div class="apexcharts-tooltip-z-group"><span class="apexcharts-tooltip-text-z-label"></span><span class="apexcharts-tooltip-text-z-value"></span></div></div></div></div><div class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light"><div class="apexcharts-yaxistooltip-text"></div></div></div></div>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 93px; height: 61px;"></div></div><div class="contract-trigger"></div></div></div>
+                                </div>
+                            </div> <!-- end row-->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div> <!-- end col -->
+            </div>
+            
+            
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                © Hyper - Coderthemes.com
+              </div>
+              <div class="col-md-6">
+                <div class="text-md-end footer-links d-none d-md-block">
+                  <a href="javascript: void(0);">About</a>
+                  <a href="javascript: void(0);">Support</a>
+                  <a href="javascript: void(0);">Contact Us</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="endbar-offcanvas"
+      aria-labelledby="endbar-offcanvas"
+    >
+      <div class="end-bar">
+        <div class="rightbar-title">
+          <a href="javascript:void(0);" class="end-bar-toggle float-end">
+            <i class="dripicons-cross noti-icon"></i>
+          </a>
+          <h5 class="m-0">Settings</h5>
+        </div>
+
+        <div class="rightbar-content h-100" data-simplebar>
+          <div class="p-3">
+            <div class="alert alert-warning" role="alert">
+              <strong>Customize </strong> the overall color scheme, sidebar
+              menu, etc.
+            </div>
+
+            <h5 class="mt-3">Width</h5>
+            <hr class="mt-1" />
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="width"
+                value="fluid"
+                id="fluid-check"
+                checked="checked"
+              />
+              <label class="form-check-label" for="fluid-check">Fluid</label>
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="width"
+                value="boxed"
+                id="boxed-check"
+              />
+              <label class="form-check-label" for="boxed-check">Boxed</label>
+            </div>
+
+            <h5 class="mt-4">Left Sidebar</h5>
+            <hr class="mt-1" />
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="theme"
+                value="default"
+                id="default-check"
+              />
+              <label class="form-check-label" for="default-check"
+                >Default</label
+              >
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="theme"
+                value="light"
+                id="light-check"
+                checked="checked"
+              />
+              <label class="form-check-label" for="light-check">Light</label>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="theme"
+                value="dark"
+                id="dark-check"
+              />
+              <label class="form-check-label" for="dark-check">Dark</label>
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="compact"
+                value="fixed"
+                id="fixed-check"
+                checked="checked"
+              />
+              <label class="form-check-label" for="fixed-check">Fixed</label>
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="compact"
+                value="condensed"
+                id="condensed-check"
+              />
+              <label class="form-check-label" for="condensed-check"
+                >Condensed</label
+              >
+            </div>
+
+            <div class="form-check form-switch mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="compact"
+                value="scrollable"
+                id="scrollable-check"
+              />
+              <label class="form-check-label" for="scrollable-check"
+                >Scrollable</label
+              >
+            </div>
+
+            <div class="d-grid mt-4">
+              <button class="btn btn-primary" id="resetBtn">
+                Reset to Default
+              </button>
+
+              <a
+                href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/"
+                class="btn btn-danger mt-3"
+                target="_blank"
+                ><i class="mdi mdi-basket me-1"></i> Purchase Now</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      defer="defer"
+      src="{{ url_for('static', filename='js/app.js') }}"
+    ></script>
+  </body>
+
+  <script type="text/javascript">
+    jQuery(document).ready(function () {
+      jQuery.ajax({
+        type: "GET",
+        url: "/all-data",
+        data: "data",
+        dataType: "json",
+        success: function (response) {
+          populatemap(response);
+        },
+      });
+    });
+
+    var mymap = L.map("mapid").setView(["18.1959839", "-73.7531521"], 17);
+    L.tileLayer(
+      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWl5YW1vdG9pbnRlcm5hdGlvbmFsIiwiYSI6ImNrc2phYW0xcTI4d3Iyem5xMmh1ZjRsZ2EifQ.Yh7n3cI78Rc7QBnQcQTSmw",
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        backgroundcolor: "red",
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken:
+          "pk.eyJ1IjoibWl5YW1vdG9pbnRlcm5hdGlvbmFsIiwiYSI6ImNrc2phYW0xcTI4d3Iyem5xMmh1ZjRsZ2EifQ.Yh7n3cI78Rc7QBnQcQTSmw",
+      }
+    ).addTo(mymap);
+
+    // var marker = L.marker([jQuery('#my-data').data('latitude'), jQuery('#my-data').data('longitude')]).addTo(mymap);
+
+    var greenIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+});
+
+var yellowIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+});
+
+
+
+
+var redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+});
+
+
+    function populatemap(obj) {
+        var red = 0
+        var yellow = 0
+        var green = 0
+
+        var markers = L.markerClusterGroup(
+            {
+                disableClusteringAtZoom: 18,
+                showCoverageOnHover: false,
+                maxClusterRadius: 60
+            }
+        );
+        for (var i = 0; i < obj.length; i++) {
+        var obj2 = obj[i];
+   
+        
+        var tagged = obj2.tag;
+
+        if (tagged == "Unsafe") {
+        var newMarker = L.marker([obj2.latitude,obj2.longitude], {icon: redIcon});
+        markers.addLayer(newMarker)    
+        newMarker.on('click', onClick_Marker)
+        newMarker.on('mouseover', customTip);
+        newMarker.id = obj2.id
+        newMarker.buildingname = obj2.buildingname
+        newMarker.image = obj2.image
+        red +=1
+        }
+        if (tagged == "Restricted") {
+            var newMarker = L.marker([obj2.latitude,obj2.longitude], {icon: yellowIcon});
+        markers.addLayer(newMarker)    
+        newMarker.on('click', onClick_Marker)
+        newMarker.on('mouseover', customTip);
+        newMarker.id = obj2.id
+        newMarker.buildingname = obj2.buildingname
+        newMarker.image = obj2.image
+        yellow +=1
+        }
+
+        if (tagged == "Safe") {
+            var newMarker = L.marker([obj2.latitude,obj2.longitude], {icon: greenIcon});
+            markers.addLayer(newMarker)    
+        newMarker.on('click', onClick_Marker)
+        newMarker.on('mouseover', customTip);
+        newMarker.id = obj2.id
+        newMarker.buildingname = obj2.buildingname
+        newMarker.image = obj2.image
+        green +=1
+        }
+
+
+
+       
+
+  }
+ console.log(red)
+ 
+  function customTip(e) {
+    this.unbindTooltip();
+    var marker = e.target;
+    console.log(marker.image)
+    
+    if(!this.isPopupOpen()) this.bindPopup('<img src ="' + marker.image+'"? style = "width: 200px; height: 200px; object-fit: cover;">').openPopup();
+}
+
+function customPop() {
+    this.unbindTooltip();
+}
+
+
+
+
+
+  mymap.addLayer(markers);
+
+  ;}
+
+
+  
+    function onClick_Marker(e) {
+    var marker = e.target;
+    window.location.href = '/'+ marker.id;
+  
+}
+    var briteChartApp = window.briteChartApp || {};
+  </script>
+  
+</html>

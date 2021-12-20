@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="480px" height="468px" viewBox="0 0 480 468" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>House Restricted</title>
+    <desc>Created with Sketch.</desc>
+    <g id="House-Restricted" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="Crack-Copy" transform="translate(182.993801, 162.835710) rotate(7.000000) translate(-182.993801, -162.835710) translate(159.493801, 100.335710)" stroke="#FFFFFF">
+            <path d="M0.5,0.5 L45.25,39.5" id="Line-21-Copy-5" stroke-width="11"></path>
+            <path d="M9,40 L46.5,99" id="Line-21-Copy-4" stroke-width="10" transform="translate(27.750000, 69.500000) scale(1, -1) translate(-27.750000, -69.500000) "></path>
+            <path d="M9,125 L46,99" id="Line-21-Copy-3" stroke-width="10" transform="translate(28.000000, 112.000000) scale(1, -1) translate(-28.000000, -112.000000) "></path>
+        </g>
+        <g id="Crack-Copy-3" transform="translate(265.056758, 134.854164) rotate(119.000000) translate(-265.056758, -134.854164) translate(241.556758, 72.354164)" stroke="#FFFFFF">
+            <path d="M0.5,0.5 L45.25,39.5" id="Line-21-Copy-5" stroke-width="11"></path>
+            <path d="M9,40 L46.5,99" id="Line-21-Copy-4" stroke-width="10" transform="translate(27.750000, 69.500000) scale(1, -1) translate(-27.750000, -69.500000) "></path>
+            <path d="M9,125 L46,99" id="Line-21-Copy-3" stroke-width="10" transform="translate(28.000000, 112.000000) scale(1, -1) translate(-28.000000, -112.000000) "></path>
+        </g>
+        <g id="Crack-Copy-2" transform="translate(346.993801, 365.835710) rotate(21.000000) translate(-346.993801, -365.835710) translate(323.493801, 303.335710)" stroke="#FFFFFF">
+            <path d="M0.5,0.5 L45.25,39.5" id="Line-21-Copy-5" stroke-width="11"></path>
+            <path d="M9,40 L46.5,99" id="Line-21-Copy-4" stroke-width="10" transform="translate(27.750000, 69.500000) scale(1, -1) translate(-27.750000, -69.500000) "></path>
+            <path d="M9,125 L46,99" id="Line-21-Copy-3" stroke-width="10" transform="translate(28.000000, 112.000000) scale(1, -1) translate(-28.000000, -112.000000) "></path>
+        </g>
+        <path d="M193,443 L95,443 C86.7157288,443 80,436.284271 80,428 L80,222 C80,221.663971 80.0110494,221.330524 80.0328046,221 L36,221 L240,16 L444,221 L404.967195,221 C404.988951,221.330524 405,221.663971 405,222 L405,428 C405,436.284271 398.284271,443 390,443 L292,443 L292,319 C292,312.924868 287.075132,308 281,308 L204,308 C197.924868,308 193,312.924868 193,319 L193,443 Z" id="Triangle-2" stroke="#FFFFFF" stroke-width="20" stroke-linejoin="round"></path>
+    </g>
+</svg>

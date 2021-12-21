@@ -52,10 +52,7 @@ def parse_json(data, dashboard: bool = False):
     return json.loads(json_util.dumps(data))
 
 
-app = FastAPI(
-    title="Miyamoto MTPTC Assessments",
-    version="0.1.1",
-)
+app = FastAPI(title="Miyamoto MTPTC Assessments", version="0.1.1", root_path="/")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -414,7 +411,6 @@ async def geo_json_lookup(start, limit):
             assessments.append(GeoAssessment(**r))
         return assessments
     except Exception as ex:
-        print(ex)
         return None
 
 
@@ -492,31 +488,31 @@ async def get_geojson_miyamoto(start: int = 0, limit: int = 10):
 #             FileResponse(path="c:/", filename="test.xls", media_type="text/mp4")
 
 
-async def lookup_assessment_by_qr(qrcode: str):
+# async def lookup_assessment_by_qr(qrcode: str):
 
-    result = collection.find_one(
-        {
-            "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment": qrcode
-        }
-    )
-    if result:
-        return parse_json(result)
+#     result = collection.find_one(
+#         {
+#             "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment": qrcode
+#         }
+#     )
+#     if result:
+#         return parse_json(result)
 
-    raise HTTPException(status_code=404, detail="No assessment with that ID.")
-
-
-@app.get("/assessment-data/qr")
-async def get_assessment_by_qr(
-    qrcode: str, assessment=Depends(lookup_assessment_by_qr)
-):
-    return assessment
+#     raise HTTPException(status_code=404, detail="No assessment with that ID.")
 
 
-@app.get("/dashboard")
-async def get_assessment_by_qr(
-    request: Request,
-    response_class=HTMLResponse,
-):
-    return templates.TemplateResponse(
-        "dashboard.html", {"request": request, "data": {}}
-    )
+# @app.get("/assessment-data/qr")
+# async def get_assessment_by_qr(
+#     qrcode: str, assessment=Depends(lookup_assessment_by_qr)
+# ):
+#     return assessment
+
+
+# @app.get("/dashboard")
+# async def get_assessment_by_qr(
+#     request: Request,
+#     response_class=HTMLResponse,
+# ):
+#     return templates.TemplateResponse(
+#         "dashboard.html", {"request": request, "data": {}}
+#     )

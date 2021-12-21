@@ -3,11 +3,11 @@ from typing import List, Any, Optional
 
 
 class Attachment(BaseModel):
-    download_url: str
+    download_url: Optional[str]
 
-    download_medium_url: str
-    download_small_url: str
-    download_large_url: str
+    download_medium_url: Optional[str]
+    download_small_url: Optional[str]
+    download_large_url: Optional[str]
     mimetype: str
     filename: str
     instance: int

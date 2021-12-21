@@ -252,6 +252,23 @@
         "documentation": {}
     },
     {
+        "label": "mock",
+        "importPath": "unittest",
+        "description": "unittest",
+        "isExtraImport": true,
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
         "label": "image_url",
         "kind": 2,
         "importPath": "main",
@@ -346,7 +363,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI(\n    title=\"Miyamoto MTPTC Assessments\",\n    version=\"0.1.1\",\n)\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):",
+        "peekOfCode": "app = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\ndef convertogeojson(received_assessments: AssessmentList):\n    data = []\n    for assessment in received_assessments.assessments:\n        properties_temp = {",
         "detail": "main",
         "documentation": {}
     },
@@ -391,7 +408,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class Attachment(BaseModel):\n    download_url: str\n    download_medium_url: str\n    download_small_url: str\n    download_large_url: str\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):",
+        "peekOfCode": "class Attachment(BaseModel):\n    download_url: Optional[str]\n    download_medium_url: Optional[str]\n    download_small_url: Optional[str]\n    download_large_url: Optional[str]\n    mimetype: str\n    filename: str\n    instance: int\n    xform: int\nclass EnqDetailleGroupNiveau(BaseModel):",
         "detail": "models",
         "documentation": {}
     },
@@ -438,6 +455,24 @@
         "description": "models",
         "peekOfCode": "class AssessmentList(BaseModel):\n    assessments: Optional[List[Assessment]]",
         "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "TestMethods",
+        "kind": 6,
+        "importPath": "test_api",
+        "description": "test_api",
+        "peekOfCode": "class TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"https://miyamoto.herokuapp.com/geojsonv2?start=0&limit=100\"\n        )\n        assert response.status_code == 200\n        json = response.json()\n        assert response.json()\n        assert len(json[\"features\"]) == 100\n        for i in json[\"features\"]:",
+        "detail": "test_api",
+        "documentation": {}
+    },
+    {
+        "label": "get_request",
+        "kind": 2,
+        "importPath": "test_api",
+        "description": "test_api",
+        "peekOfCode": "def get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"https://miyamoto.herokuapp.com/geojsonv2?start=0&limit=100\"\n        )\n        assert response.status_code == 200\n        json = response.json()",
+        "detail": "test_api",
         "documentation": {}
     }
 ]

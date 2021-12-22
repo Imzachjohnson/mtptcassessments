@@ -1,10 +1,10 @@
 from pydantic import BaseModel, Field
 from typing import List, Any, Optional
+import secrets
 
 
 class Attachment(BaseModel):
     download_url: Optional[str]
-
     download_medium_url: Optional[str]
     download_small_url: Optional[str]
     download_large_url: Optional[str]
@@ -112,3 +112,14 @@ class GeoAssessmentList(BaseModel):
 
 class AssessmentList(BaseModel):
     assessments: Optional[List[Assessment]]
+
+
+class User(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    organization: str
+    admin: bool = False
+    active: bool = True
+    password: str
+    api_key: str

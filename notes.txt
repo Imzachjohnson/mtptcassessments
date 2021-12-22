@@ -1,0 +1,196 @@
+
+# async def collect_download(start: int, limit: int, commune: str = None):
+#     if commune:
+#         results = collection.find({}).skip(start).limit(limit)
+#     else:
+#         results = collection.find({}).skip(start).limit(limit)
+
+#     json_string = json_util.dumps(results)
+#     json_obj = json.loads(json_string)
+#     data1 = pd.json_normalize(json_obj)
+#     csv = data1.to_csv("FileName.csv")
+
+
+# @app.get(
+#     "/download",
+#     tags=["Files/Downloads"],
+#     summary="Download Assessment Data",
+# )
+# async def report(
+#     filetype: str = "xls", start: int = 0, limit: int = 10, commune: str = None
+# ):
+#     if filetype:
+#         if filetype == "xls":
+#             thefile = await collect_download(start, limit, commune)
+#             FileResponse(path="c:/", filename="test.xls", media_type="text/mp4")
+
+
+# async def lookup_assessment_by_qr(qrcode: str):
+
+#     result = collection.find_one(
+#         {
+#             "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment": qrcode
+#         }
+#     )
+#     if result:
+#         return parse_json(result)
+
+#     raise HTTPException(status_code=404, detail="No assessment with that ID.")
+
+
+# @app.get("/assessment-data/qr")
+# async def get_assessment_by_qr(
+#     qrcode: str, assessment=Depends(lookup_assessment_by_qr)
+# ):
+#     return assessment
+
+
+# @app.get("/dashboard")
+# async def get_assessment_by_qr(
+#     request: Request,
+#     response_class=HTMLResponse,
+# ):
+#     return templates.TemplateResponse(
+#         "dashboard.html", {"request": request, "data": {}}
+#     )
+
+
+
+
+
+# Deprecated method for GeoJson conversion
+def convertogeojson(received_assessments: AssessmentList):
+    data = []
+
+    for assessment in received_assessments.assessments:
+
+        properties_temp = {
+            "id": assessment.id,
+        }
+
+        if assessment.geolocation[0] and assessment.geolocation[1]:
+            image: str = ""
+            all_images = []
+            try:
+                for attachment in assessment.attachments:
+                    all_images.append(attachment.download_large_url)
+
+                for image in all_images:
+                    if assessment.principal_photo in image:
+                        all_images.remove(image)
+                        all_images.insert(0, image)
+
+                if assessment.plan_photo:
+                    all_images.insert(
+                        1,
+                        f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
+                    )
+
+                for index, image in enumerate(all_images):
+                    properties_temp.update({f"image{str(index)}": image})
+            except Exception as e:
+                image = "None"
+
+            my_point = Point(
+                (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
+            )
+            my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
+            data.append(my_feature)
+
+    feature_collection = FeatureCollection(data)
+
+    return feature_collection
+
+
+# Deprecated method for GeoJson conversion
+def conversingletogeojson(assessment: Assessment):
+    data = []
+
+    properties_temp = {
+        "id": assessment.id,
+    }
+
+    if assessment.geolocation[0] and assessment.geolocation[1]:
+        image: str = ""
+        all_images = []
+        try:
+            for attachment in assessment.attachments:
+                all_images.append(attachment.download_large_url)
+
+            for image in all_images:
+                if assessment.principal_photo in image:
+                    all_images.remove(image)
+                    all_images.insert(0, image)
+
+            if assessment.plan_photo:
+                all_images.insert(
+                    1,
+                    f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
+                )
+            else:
+                all_images.insert(
+                    1,
+                    f"None",
+                )
+
+            for index, image in enumerate(all_images):
+                properties_temp.update({f"image{str(index)}": image})
+        except Exception as e:
+
+            image = "None"
+
+        my_point = Point(
+            (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
+        )
+        my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
+        data.append(my_feature)
+
+    feature_collection = FeatureCollection(data)
+
+    return feature_collection
+
+
+# Deprecated method for GeoJson conversion
+def all_data_request(api_key, start, limit):
+
+    request_data = {"Authorization": "Token " + api_key}
+    r = requests.get(
+        url=API_URL + FORM_ID + f"?start={start}&limit={limit}",
+        headers={"Authorization": "Token " + api_key},
+        timeout=800,
+    )
+    response = r.json()
+    built_assessment = AssessmentList(assessments=response)
+    return built_assessment
+
+
+# Deprecated method for GeoJson conversion
+def all_data_request_no_pydantic(api_key, start, limit):
+
+    request_data = {"Authorization": "Token " + api_key}
+    r = requests.get(
+        url=API_URL + FORM_ID + f"?start={start}&limit={limit}",
+        headers={"Authorization": "Token " + api_key},
+        timeout=800,
+    )
+    response = r.json()
+
+    for r in response:
+        for k, l in list(r.items()):
+            r[k.replace("/", "_")] = r.pop(k)
+
+    return response
+
+
+# Deprecated method for GeoJson conversion
+def single_assessment_request(api_key, assessment):
+    request_data = {"Authorization": "Token " + api_key}
+    r = requests.get(
+        url=API_URL + FORM_ID + "/" + assessment,
+        headers={"Authorization": "Token " + api_key},
+    )
+
+    response = r.json()
+    built_assessment = Assessment.build(r.json())
+
+    return built_assessment

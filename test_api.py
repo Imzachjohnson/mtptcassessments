@@ -1,6 +1,7 @@
 from unittest import mock
 import pytest
 import requests
+import users
 
 
 def get_request(url):
@@ -32,3 +33,9 @@ class TestMethods:
             assert i["geometry"]["type"] == "Point"
             assert i["geometry"]["coordinates"]
             assert len(i["geometry"]["coordinates"]) == 2
+
+
+class TestUsers:
+    def test_get_user_api_key(self):
+        user = users.get_user_by_api_key("2dxc-3eBuHwYPVN1cmZjLrDRXub_LcNxHQ")
+        assert user.first_name == "test"

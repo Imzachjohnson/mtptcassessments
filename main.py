@@ -12,192 +12,61 @@ import pandas as pd
 from datetime import datetime
 import json
 from models import *
+from users import (
+    admin_route,
+    authenticate_user,
+    create_user,
+    get_user_by_api_key,
+    get_current_user,
+)
 
 from pymongo import MongoClient
-
 
 from fastapi.responses import FileResponse
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from helpers import parse_json
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+import jwt
 
 
+# Database Connection
 myclient = MongoClient(
     "mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority"
 )
 
+JWT_SECRET = "054mc9289fvmiiwnvnh5"
 
 # database
 db = myclient["mtptcmiyamoto"]
 
-# Created or Switched to collection
+# Assessment collection
 collection = db["assessments"]
 
-
-def image_url(image: str):
-    return f"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}"
-
-
-def parse_json(data, dashboard: bool = False):
-
-    if dashboard:
-        data = json.loads(json_util.dumps(data))
-        print(data)
-        for d in data:
-            print(d)
-            d["x"] = d.pop("_id")
-        print(data)
-        return data
-
-    return json.loads(json_util.dumps(data))
-
-
+# Declare fast API
 app = FastAPI(title="Miyamoto MTPTC Assessments", version="0.1.1", root_path="/")
 
+# Used for HTML pages
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 templates = Jinja2Templates(directory="templates")
 
+# Kobo Api Information
 API_URL = "https://kc.humanitarianresponse.info/api/v1/data/"
 
 MEDIA_API_URL = "https://kc.humanitarianresponse.info/api/v1/media/"
 
 FORM_ID = "894190"
 
-
-def convertogeojson(received_assessments: AssessmentList):
-    data = []
-
-    for assessment in received_assessments.assessments:
-
-        properties_temp = {
-            "id": assessment.id,
-        }
-
-        if assessment.geolocation[0] and assessment.geolocation[1]:
-            image: str = ""
-            all_images = []
-            try:
-                for attachment in assessment.attachments:
-                    all_images.append(attachment.download_large_url)
-
-                for image in all_images:
-                    if assessment.principal_photo in image:
-                        all_images.remove(image)
-                        all_images.insert(0, image)
-
-                if assessment.plan_photo:
-                    all_images.insert(
-                        1,
-                        f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
-                    )
-
-                for index, image in enumerate(all_images):
-                    properties_temp.update({f"image{str(index)}": image})
-            except Exception as e:
-                image = "None"
-
-            my_point = Point(
-                (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
-            )
-            my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
-            data.append(my_feature)
-
-    feature_collection = FeatureCollection(data)
-
-    return feature_collection
+OAUTH_URL = OAuth2PasswordBearer(tokenUrl="token")
 
 
-def conversingletogeojson(assessment: Assessment):
-    data = []
-
-    properties_temp = {
-        "id": assessment.id,
-    }
-
-    if assessment.geolocation[0] and assessment.geolocation[1]:
-        image: str = ""
-        all_images = []
-        try:
-            for attachment in assessment.attachments:
-                all_images.append(attachment.download_large_url)
-
-            for image in all_images:
-                if assessment.principal_photo in image:
-                    all_images.remove(image)
-                    all_images.insert(0, image)
-
-            if assessment.plan_photo:
-                all_images.insert(
-                    1,
-                    f"https://kc.humanitarianresponse.info/attachment/original?media_file=btbmtptc/attachments/{assessment.plan_photo[0].photo}",
-                )
-            else:
-                all_images.insert(
-                    1,
-                    f"None",
-                )
-
-            for index, image in enumerate(all_images):
-                properties_temp.update({f"image{str(index)}": image})
-        except Exception as e:
-
-            image = "None"
-
-        my_point = Point(
-            (float(assessment.geolocation[1]), float(assessment.geolocation[0]))
-        )
-        my_feature = Feature(geometry=Point(my_point), properties=properties_temp)
-        data.append(my_feature)
-
-    feature_collection = FeatureCollection(data)
-
-    return feature_collection
+# Append Kobo URL to images
+def image_url(image: str):
+    return f"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}"
 
 
-def all_data_request(api_key, start, limit):
-
-    request_data = {"Authorization": "Token " + api_key}
-    r = requests.get(
-        url=API_URL + FORM_ID + f"?start={start}&limit={limit}",
-        headers={"Authorization": "Token " + api_key},
-        timeout=800,
-    )
-    response = r.json()
-    built_assessment = AssessmentList(assessments=response)
-    return built_assessment
-
-
-def all_data_request_no_pydantic(api_key, start, limit):
-
-    request_data = {"Authorization": "Token " + api_key}
-    r = requests.get(
-        url=API_URL + FORM_ID + f"?start={start}&limit={limit}",
-        headers={"Authorization": "Token " + api_key},
-        timeout=800,
-    )
-    response = r.json()
-
-    for r in response:
-        for k, l in list(r.items()):
-            r[k.replace("/", "_")] = r.pop(k)
-
-    return response
-
-
-def single_assessment_request(api_key, assessment):
-    request_data = {"Authorization": "Token " + api_key}
-    r = requests.get(
-        url=API_URL + FORM_ID + "/" + assessment,
-        headers={"Authorization": "Token " + api_key},
-    )
-
-    response = r.json()
-    built_assessment = Assessment.build(r.json())
-
-    return built_assessment
-
-
+# GeoJSON Route
 @app.get(
     "/geojson/{api_key}",
     tags=["Geospatial Data"],
@@ -208,6 +77,7 @@ async def get_geojson(api_key, start: int = 0, limit: int = 10):
     return convertogeojson(all_data_request(api_key, start, limit))
 
 
+# Assessment data route
 @app.get(
     "/assessment-data/",
     tags=["Assessment Data"],
@@ -270,12 +140,15 @@ async def get_all_data(
             raise HTTPException(status_code=404, detail="Error loading data")
 
 
+# Stats Route
 @app.get(
     "/assessment-data/stats/",
     tags=["Reporting"],
     summary="Returns a JSON response with various assessment data statistics.",
 )
-async def assessment_statistics(dashboard: bool = False):
+async def assessment_statistics(
+    auth: str, validate=Depends(get_user_by_api_key), dashboard: bool = False
+):
     try:
 
         if dashboard:
@@ -347,6 +220,7 @@ async def assessment_statistics(dashboard: bool = False):
         raise HTTPException(status_code=404, detail="Error fetching statistics")
 
 
+# Data for PowerBI reports
 @app.get(
     "/assessment-data/report/",
     tags=["Reporting"],
@@ -380,6 +254,7 @@ async def report(start: int = 0, limit: int = 10):
     return parse_json(results)
 
 
+# Method to lookup and return assessment data for GeoJSON route
 async def geo_json_lookup(start, limit):
     results = (
         collection.find(
@@ -414,6 +289,7 @@ async def geo_json_lookup(start, limit):
         return None
 
 
+# Build a GeoJSON object
 async def new_build_geojson(results: []):
 
     data = []
@@ -448,12 +324,15 @@ async def new_build_geojson(results: []):
     return FeatureCollection(data)
 
 
+# V2 route for GEOJSON
 @app.get(
     "/geojsonv2",
     tags=["Geospatial Data"],
     summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Miyamoto database.",
 )
-async def get_geojson_miyamoto(start: int = 0, limit: int = 10):
+async def get_geojson_miyamoto(
+    auth: str, validate=Depends(get_user_by_api_key), start: int = 0, limit: int = 10
+):
     results = await geo_json_lookup(start, limit)
     if results:
         final_json: FeatureCollection = await new_build_geojson(results)
@@ -462,57 +341,48 @@ async def get_geojson_miyamoto(start: int = 0, limit: int = 10):
     raise HTTPException(404, "Could not build GeoJson at this time.")
 
 
-# async def collect_download(start: int, limit: int, commune: str = None):
-#     if commune:
-#         results = collection.find({}).skip(start).limit(limit)
-#     else:
-#         results = collection.find({}).skip(start).limit(limit)
-
-#     json_string = json_util.dumps(results)
-#     json_obj = json.loads(json_string)
-#     data1 = pd.json_normalize(json_obj)
-#     csv = data1.to_csv("FileName.csv")
-
-
-# @app.get(
-#     "/download",
-#     tags=["Files/Downloads"],
-#     summary="Download Assessment Data",
-# )
-# async def report(
-#     filetype: str = "xls", start: int = 0, limit: int = 10, commune: str = None
-# ):
-#     if filetype:
-#         if filetype == "xls":
-#             thefile = await collect_download(start, limit, commune)
-#             FileResponse(path="c:/", filename="test.xls", media_type="text/mp4")
+# Create User via API Key
+@app.get("/create-user", include_in_schema=False)
+async def create_user_route(
+    first_name: str,
+    last_name: str,
+    email: str,
+    password: str,
+    organization: str,
+    auth: str,
+    admin: bool,
+    validate=Depends(admin_route),
+):
+    user = await create_user(
+        first_name=first_name,
+        last_name=last_name,
+        email=email,
+        password=password,
+        organization=organization,
+        admin=admin,
+    )
+    return user
+    raise HTTPException(404, "Something went wrong.")
 
 
-# async def lookup_assessment_by_qr(qrcode: str):
-
-#     result = collection.find_one(
-#         {
-#             "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment": qrcode
-#         }
-#     )
-#     if result:
-#         return parse_json(result)
-
-#     raise HTTPException(status_code=404, detail="No assessment with that ID.")
+@app.get("/test", include_in_schema=False)
+async def get_user(auth: str, validate=Depends(get_user_by_api_key)):
+    user = await get_user_by_api_key(auth)
+    return user
 
 
-# @app.get("/assessment-data/qr")
-# async def get_assessment_by_qr(
-#     qrcode: str, assessment=Depends(lookup_assessment_by_qr)
-# ):
-#     return assessment
+@app.post("/token")
+async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    print(form_data.username)
+    user = await authenticate_user(form_data.username, form_data.password)
+
+    if not user:
+        return {"error": "Invalid credentials"}
+
+    token = jwt.encode(user.dict(), JWT_SECRET)
+    return {"access_token": token, "token_type": "bearer"}
 
 
-# @app.get("/dashboard")
-# async def get_assessment_by_qr(
-#     request: Request,
-#     response_class=HTMLResponse,
-# ):
-#     return templates.TemplateResponse(
-#         "dashboard.html", {"request": request, "data": {}}
-#     )
+@app.get("/users/me")
+async def get_current(user: User = Depends(get_current_user)):
+    return user

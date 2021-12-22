@@ -29,14 +29,13 @@ from fastapi.templating import Jinja2Templates
 from helpers import parse_json
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import jwt
-
+from keys import Keys
 
 # Database Connection
 myclient = MongoClient(
     "mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority"
 )
 
-JWT_SECRET = "054mc9289fvmiiwnvnh5"
 
 # database
 db = myclient["mtptcmiyamoto"]
@@ -57,8 +56,6 @@ API_URL = "https://kc.humanitarianresponse.info/api/v1/data/"
 MEDIA_API_URL = "https://kc.humanitarianresponse.info/api/v1/media/"
 
 FORM_ID = "894190"
-
-OAUTH_URL = OAuth2PasswordBearer(tokenUrl="token")
 
 
 # Append Kobo URL to images
@@ -88,6 +85,7 @@ async def get_all_data(
     limit: int = 10,
     repairs: bool = False,
     coordinatesonly: bool = False,
+    token: str = Depends(Keys.OAUTH_URL),
 ):
     if limit >= 10001:
         raise HTTPException(
@@ -371,18 +369,17 @@ async def get_user(auth: str, validate=Depends(get_user_by_api_key)):
     return user
 
 
-@app.post("/token")
+@app.post("/token", tags=["Authentication"])
 async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    print(form_data.username)
     user = await authenticate_user(form_data.username, form_data.password)
 
     if not user:
-        return {"error": "Invalid credentials"}
+        raise HTTPException(404, "Invalid credentials")
 
-    token = jwt.encode(user.dict(), JWT_SECRET)
+    token = jwt.encode(user.user_info, Keys.JWT_SECRET)
     return {"access_token": token, "token_type": "bearer"}
 
 
-@app.get("/users/me")
+@app.get("/users/me", tags=["Users"], summary="Get the current user")
 async def get_current(user: User = Depends(get_current_user)):
     return user

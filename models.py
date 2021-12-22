@@ -123,3 +123,13 @@ class User(BaseModel):
     active: bool = True
     password: str
     api_key: str
+
+    @property
+    def user_info(self):
+        return {
+            "first_name": self.first_name,
+            "email": self.email,
+            "organization": self.organization,
+            "admin": self.admin,
+            "active": self.active,
+        }

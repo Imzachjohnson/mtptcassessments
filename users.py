@@ -60,7 +60,7 @@ async def create_user(
 async def get_user_by_api_key(auth):
     user = collection.find_one({"api_key": auth})
 
-    if user and user.active:
+    if user and user["active"]:
         json_user = parse_json(user)
         return User(**json_user)
     else:
@@ -99,6 +99,5 @@ def get_current_user(token: str = Depends(Keys.OAUTH_URL)):
         payload = jwt.decode(token, Keys.JWT_SECRET, algorithms=["HS256"])
         user = collection.find_one({"email": payload.get("email")})
         return User(**user)
-    except Exception as ex:
-        print(ex)
+    except:
         raise HTTPException(status_code=404, detail="Invalid API Key")

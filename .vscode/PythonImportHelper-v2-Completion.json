@@ -276,6 +276,14 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "users",
         "kind": 6,
         "isExtraImport": true,
@@ -398,6 +406,22 @@
         "documentation": {}
     },
     {
+        "label": "Keys",
+        "importPath": "keys",
+        "description": "keys",
+        "isExtraImport": true,
+        "detail": "keys",
+        "documentation": {}
+    },
+    {
+        "label": "Keys",
+        "importPath": "keys",
+        "description": "keys",
+        "isExtraImport": true,
+        "detail": "keys",
+        "documentation": {}
+    },
+    {
         "label": "secrets",
         "kind": 6,
         "isExtraImport": true,
@@ -424,19 +448,19 @@
         "documentation": {}
     },
     {
+        "label": "CaseInsensitiveDict",
+        "importPath": "requests.structures",
+        "description": "requests.structures",
+        "isExtraImport": true,
+        "detail": "requests.structures",
+        "documentation": {}
+    },
+    {
         "label": "CryptContext",
         "importPath": "passlib.context",
         "description": "passlib.context",
         "isExtraImport": true,
         "detail": "passlib.context",
-        "documentation": {}
-    },
-    {
-        "label": "Keys",
-        "importPath": "keys",
-        "description": "keys",
-        "isExtraImport": true,
-        "detail": "keys",
         "documentation": {}
     },
     {
@@ -471,16 +495,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\nJWT_SECRET = \"054mc9289fvmiiwnvnh5\"\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Assessment collection\ncollection = db[\"assessments\"]\n# Declare fast API\napp = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "JWT_SECRET",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "JWT_SECRET = \"054mc9289fvmiiwnvnh5\"\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Assessment collection\ncollection = db[\"assessments\"]\n# Declare fast API\napp = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")\n# Used for HTML pages\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")",
+        "peekOfCode": "myclient = MongoClient(\n    \"mongodb+srv://zjohnson:Coopalex0912@cluster0.2amvb.mongodb.net/mtptcmiyamoto?retryWrites=true&w=majority\"\n)\n# database\ndb = myclient[\"mtptcmiyamoto\"]\n# Assessment collection\ncollection = db[\"assessments\"]\n# Declare fast API\napp = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")\n# Used for HTML pages",
         "detail": "main",
         "documentation": {}
     },
@@ -507,7 +522,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")\n# Used for HTML pages\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\nOAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images",
+        "peekOfCode": "app = FastAPI(title=\"Miyamoto MTPTC Assessments\", version=\"0.1.1\", root_path=\"/\")\n# Used for HTML pages\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")\ntemplates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):",
         "detail": "main",
         "documentation": {}
     },
@@ -516,7 +531,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\nOAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(",
         "detail": "main",
         "documentation": {}
     },
@@ -525,7 +540,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "API_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\nOAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",",
+        "peekOfCode": "API_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],",
         "detail": "main",
         "documentation": {}
     },
@@ -534,7 +549,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "MEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\nOAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],",
+        "peekOfCode": "MEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",",
         "detail": "main",
         "documentation": {}
     },
@@ -543,16 +558,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FORM_ID = \"894190\"\nOAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "OAUTH_URL",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "OAUTH_URL = OAuth2PasswordBearer(tokenUrl=\"token\")\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",\n    deprecated=True,",
+        "peekOfCode": "FORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",\n    deprecated=True,",
         "detail": "main",
         "documentation": {}
     },
@@ -615,7 +621,7 @@
         "kind": 6,
         "importPath": "models",
         "description": "models",
-        "peekOfCode": "class User(BaseModel):\n    first_name: str\n    last_name: str\n    email: str\n    organization: str\n    admin: bool = False\n    active: bool = True\n    password: str\n    api_key: str",
+        "peekOfCode": "class User(BaseModel):\n    first_name: str\n    last_name: str\n    email: str\n    organization: str\n    admin: bool = False\n    active: bool = True\n    password: str\n    api_key: str\n    @property",
         "detail": "models",
         "documentation": {}
     },
@@ -624,7 +630,7 @@
         "kind": 6,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "class TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"https://miyamoto.herokuapp.com/geojsonv2?start=0&limit=100\"\n        )\n        assert response.status_code == 200\n        json = response.json()\n        assert response.json()\n        assert len(json[\"features\"]) == 100\n        for i in json[\"features\"]:",
+        "peekOfCode": "class TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()\n        assert response.json()\n        assert len(json[\"features\"]) == 100\n        for i in json[\"features\"]:",
         "detail": "test_api",
         "documentation": {}
     },
@@ -633,7 +639,7 @@
         "kind": 6,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "class TestUsers:\n    def test_get_user_api_key(self):\n        user = users.get_user_by_api_key(\"2dxc-3eBuHwYPVN1cmZjLrDRXub_LcNxHQ\")\n        assert user.first_name == \"test\"",
+        "peekOfCode": "class TestUsers:\n    def test_get_current_user(self):\n        url = \"http://127.0.0.1:8000/users/me\"\n        headers = CaseInsensitiveDict()\n        headers[\"Accept\"] = \"application/json\"\n        headers[\n            \"Authorization\"\n        ] = \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ\"\n        resp = requests.get(url, headers=headers)\n        user = User(**resp.json())",
         "detail": "test_api",
         "documentation": {}
     },
@@ -642,7 +648,7 @@
         "kind": 2,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "def get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"https://miyamoto.herokuapp.com/geojsonv2?start=0&limit=100\"\n        )\n        assert response.status_code == 200\n        json = response.json()",
+        "peekOfCode": "def get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()",
         "detail": "test_api",
         "documentation": {}
     },
@@ -678,7 +684,7 @@
         "kind": 2,
         "importPath": "users",
         "description": "users",
-        "peekOfCode": "def get_current_user(token: str = Depends(Keys.OAUTH_URL)):\n    try:\n        payload = jwt.decode(token, Keys.JWT_SECRET, algorithms=[\"HS256\"])\n        user = collection.find_one({\"email\": payload.get(\"email\")})\n        return User(**user)\n    except Exception as ex:\n        print(ex)\n        raise HTTPException(status_code=404, detail=\"Invalid API Key\")",
+        "peekOfCode": "def get_current_user(token: str = Depends(Keys.OAUTH_URL)):\n    try:\n        payload = jwt.decode(token, Keys.JWT_SECRET, algorithms=[\"HS256\"])\n        user = collection.find_one({\"email\": payload.get(\"email\")})\n        return User(**user)\n    except:\n        raise HTTPException(status_code=404, detail=\"Invalid API Key\")",
         "detail": "users",
         "documentation": {}
     },

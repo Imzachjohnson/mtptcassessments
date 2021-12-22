@@ -2,6 +2,8 @@ from unittest import mock
 import pytest
 import requests
 import users
+from requests.structures import CaseInsensitiveDict
+from models import User
 
 
 def get_request(url):
@@ -12,7 +14,7 @@ def get_request(url):
 class TestMethods:
     def test_geojson(self):
         response = get_request(
-            "https://miyamoto.herokuapp.com/geojsonv2?start=0&limit=100"
+            "http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw"
         )
         assert response.status_code == 200
         json = response.json()
@@ -36,6 +38,15 @@ class TestMethods:
 
 
 class TestUsers:
-    def test_get_user_api_key(self):
-        user = users.get_user_by_api_key("2dxc-3eBuHwYPVN1cmZjLrDRXub_LcNxHQ")
-        assert user.first_name == "test"
+    def test_get_current_user(self):
+        url = "http://127.0.0.1:8000/users/me"
+        headers = CaseInsensitiveDict()
+        headers["Accept"] = "application/json"
+        headers[
+            "Authorization"
+        ] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ"
+
+        resp = requests.get(url, headers=headers)
+        user = User(**resp.json())
+        assert resp.status_code == 200
+        assert user.email == "test@gmail.com"

@@ -63,18 +63,7 @@ def image_url(image: str):
     return f"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}"
 
 
-# GeoJSON Route
-@app.get(
-    "/geojson/{api_key}",
-    tags=["Geospatial Data"],
-    summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.",
-    deprecated=True,
-)
-async def get_geojson(api_key, start: int = 0, limit: int = 10):
-    return convertogeojson(all_data_request(api_key, start, limit))
-
-
-# Assessment data route
+# Main Assessment data route
 @app.get(
     "/assessment-data/",
     tags=["Assessment Data"],
@@ -136,6 +125,75 @@ async def get_all_data(
             return json.loads(json.dumps(list_cur, default=str))
         except:
             raise HTTPException(status_code=404, detail="Error loading data")
+
+
+#
+# Get single assessment by code
+@app.get(
+    "/assessment-data/qr/",
+    tags=["Assessment Data"],
+    summary="Get single assessment by QR code.",
+)
+async def get_by_qr(
+    qrcode: str,
+    repairs: bool = False,
+    coordinatesonly: bool = False,
+    token: str = Depends(Keys.OAUTH_URL),
+):
+    qr_string = "Veuillez utiliser la camera arrière de la tablette pour scanner le QR Code du Batiment"
+
+    if not qrcode:
+        raise HTTPException(status_code=404, detail="Invalid request. Include QR code.")
+
+    if coordinatesonly:
+        assessment = collection.find_one(
+            {qr_string: qrcode},
+            {
+                "_Coordonnées GPS ( 6m près max du bâtiment)_latitude": 1,
+                "_Coordonnées GPS ( 6m près max du bâtiment)_longitude": 1,
+                "_id": 0,
+            },
+        )
+        if assessment:
+            return parse_json(assessment)
+        else:
+            raise HTTPException(status_code=404, detail=f"No assessment with that QR.")
+
+    try:
+        assessment = collection.find_one({qr_string: qrcode})
+
+        if assessment:
+            if repairs:
+
+                pipeline = [
+                    {
+                        "$match": {
+                            qr_string: qrcode,
+                        }
+                    },
+                    {
+                        "$lookup": {
+                            "from": "repairs",
+                            "localField": "_index",
+                            "foreignField": "_parent_index",
+                            "as": "repairs",
+                        },
+                    },
+                ]
+
+                result = collection.aggregate(pipeline)
+                if result:
+                    return parse_json(result)
+                else:
+                    raise HTTPException(
+                        status_code=404, detail=f"No assessment with that QR."
+                    )
+
+            return parse_json(assessment)
+        else:
+            raise HTTPException(status_code=404, detail=f"No assessment with that QR.")
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"{repr(e)}")
 
 
 # Stats Route
@@ -326,7 +384,7 @@ async def new_build_geojson(results: []):
 @app.get(
     "/geojsonv2",
     tags=["Geospatial Data"],
-    summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Miyamoto database.",
+    summary="Returns a GeoJSON feature collection with associated assessment images. Uses the Miyamoto database. authentication should be provided via a valid API key.",
 )
 async def get_geojson_miyamoto(
     auth: str, validate=Depends(get_user_by_api_key), start: int = 0, limit: int = 10

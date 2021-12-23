@@ -2,6 +2,7 @@ import json
 
 from bson import json_util
 from bson.json_util import dumps
+from models import User
 
 
 def parse_json(data, dashboard: bool = False):

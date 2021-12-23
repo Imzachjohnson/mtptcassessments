@@ -3,7 +3,11 @@ import pytest
 import requests
 import users
 from requests.structures import CaseInsensitiveDict
-from models import User
+from models import User, Assessment
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
 
 
 def get_request(url):
@@ -13,9 +17,11 @@ def get_request(url):
 
 class TestMethods:
     def test_geojson(self):
-        response = get_request(
-            "http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw"
+
+        response = client.get(
+            "/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw"
         )
+
         assert response.status_code == 200
         json = response.json()
         assert response.json()
@@ -30,23 +36,34 @@ class TestMethods:
             assert len(i["properties"]["image0"]) >= 4
             assert len(i["properties"]["image1"]) >= 4
             assert i["properties"]["id"] is not "null"
-
             assert i["geometry"]
             assert i["geometry"]["type"] == "Point"
             assert i["geometry"]["coordinates"]
             assert len(i["geometry"]["coordinates"]) == 2
 
-
-class TestUsers:
-    def test_get_current_user(self):
-        url = "http://127.0.0.1:8000/users/me"
+    def test_single_by_qr(self):
         headers = CaseInsensitiveDict()
         headers["Accept"] = "application/json"
         headers[
             "Authorization"
         ] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ"
+        response = client.get(
+            "/assessment-data/qr/?qrcode=BTSUD202621", headers=headers
+        )
+        assert response.status_code == 200
 
-        resp = requests.get(url, headers=headers)
+        assessment = Assessment(**response.json())
+        assert assessment.username == "wisvelt et Rikenson"
+
+
+class TestUsers:
+    def test_get_current_user(self):
+        headers = CaseInsensitiveDict()
+        headers["Accept"] = "application/json"
+        headers[
+            "Authorization"
+        ] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ"
+        resp = client.get("/users/me", headers=headers)
         user = User(**resp.json())
         assert resp.status_code == 200
         assert user.email == "test@gmail.com"

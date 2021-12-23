@@ -41,6 +41,46 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Assessment",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "OAuth2PasswordBearer",
         "importPath": "fastapi.security",
         "description": "fastapi.security",
@@ -260,30 +300,6 @@
         "documentation": {}
     },
     {
-        "label": "*",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "User",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
         "label": "users",
         "kind": 6,
         "isExtraImport": true,
@@ -456,6 +472,22 @@
         "documentation": {}
     },
     {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "main",
+        "description": "main",
+        "isExtraImport": true,
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "CryptContext",
         "importPath": "passlib.context",
         "description": "passlib.context",
@@ -486,7 +518,7 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",\n    deprecated=True,\n)\nasync def get_geojson(api_key, start: int = 0, limit: int = 10):",
+        "peekOfCode": "def image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# Main Assessment data route\n@app.get(\n    \"/assessment-data/\",\n    tags=[\"Assessment Data\"],\n    summary=\"Access the full assessment dataset. Queries limited to 10,000 results per request.\",\n)\nasync def get_all_data(\n    start: int = 0,",
         "detail": "main",
         "documentation": {}
     },
@@ -531,7 +563,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# Kobo Api Information\nAPI_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# Main Assessment data route\n@app.get(",
         "detail": "main",
         "documentation": {}
     },
@@ -540,7 +572,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "API_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],",
+        "peekOfCode": "API_URL = \"https://kc.humanitarianresponse.info/api/v1/data/\"\nMEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# Main Assessment data route\n@app.get(\n    \"/assessment-data/\",\n    tags=[\"Assessment Data\"],",
         "detail": "main",
         "documentation": {}
     },
@@ -549,7 +581,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "MEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",",
+        "peekOfCode": "MEDIA_API_URL = \"https://kc.humanitarianresponse.info/api/v1/media/\"\nFORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# Main Assessment data route\n@app.get(\n    \"/assessment-data/\",\n    tags=[\"Assessment Data\"],\n    summary=\"Access the full assessment dataset. Queries limited to 10,000 results per request.\",",
         "detail": "main",
         "documentation": {}
     },
@@ -558,7 +590,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "FORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# GeoJSON Route\n@app.get(\n    \"/geojson/{api_key}\",\n    tags=[\"Geospatial Data\"],\n    summary=\"Returns a GeoJSON feature collection with associated assessment images. Uses the Kobo API and must include an API key.\",\n    deprecated=True,",
+        "peekOfCode": "FORM_ID = \"894190\"\n# Append Kobo URL to images\ndef image_url(image: str):\n    return f\"https://kc.humanitarianresponse.info/attachment/large?media_file=btbmtptc/attachments/{image}\"\n# Main Assessment data route\n@app.get(\n    \"/assessment-data/\",\n    tags=[\"Assessment Data\"],\n    summary=\"Access the full assessment dataset. Queries limited to 10,000 results per request.\",\n)",
         "detail": "main",
         "documentation": {}
     },
@@ -626,11 +658,65 @@
         "documentation": {}
     },
     {
+        "label": "E0002_NombreDEtages",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class E0002_NombreDEtages(BaseModel):\n    number_double: str\nclass Date(BaseModel):\n    number_long: str\nclass DateDeLEnquete(BaseModel):\n    date: Date\nclass ID(BaseModel):\n    oid: str\nclass Index(BaseModel):\n    number_int: int",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Date",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Date(BaseModel):\n    number_long: str\nclass DateDeLEnquete(BaseModel):\n    date: Date\nclass ID(BaseModel):\n    oid: str\nclass Index(BaseModel):\n    number_int: int\nclass Assessment2(BaseModel):\n    id: ID",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "DateDeLEnquete",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class DateDeLEnquete(BaseModel):\n    date: Date\nclass ID(BaseModel):\n    oid: str\nclass Index(BaseModel):\n    number_int: int\nclass Assessment2(BaseModel):\n    id: ID\n    start: DateDeLEnquete\n    end: DateDeLEnquete",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "ID",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class ID(BaseModel):\n    oid: str\nclass Index(BaseModel):\n    number_int: int\nclass Assessment2(BaseModel):\n    id: ID\n    start: DateDeLEnquete\n    end: DateDeLEnquete\n    today: DateDeLEnquete\n    username: str",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Index",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Index(BaseModel):\n    number_int: int\nclass Assessment2(BaseModel):\n    id: ID\n    start: DateDeLEnquete\n    end: DateDeLEnquete\n    today: DateDeLEnquete\n    username: str\n    deviceid: str\n    phonenumber: str",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Assessment2",
+        "kind": 6,
+        "importPath": "models",
+        "description": "models",
+        "peekOfCode": "class Assessment2(BaseModel):\n    id: ID\n    start: DateDeLEnquete\n    end: DateDeLEnquete\n    today: DateDeLEnquete\n    username: str\n    deviceid: str\n    phonenumber: str\n    survey_date: Optional[DateDeLEnquete] = Field(None, alias=\"Date de l'enquete\")\n    division: Optional[str] = Field(None, alias=\"B-0000 - Division\")",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "TestMethods",
         "kind": 6,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "class TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()\n        assert response.json()\n        assert len(json[\"features\"]) == 100\n        for i in json[\"features\"]:",
+        "peekOfCode": "class TestMethods:\n    def test_geojson(self):\n        response = client.get(\n            \"/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()\n        assert response.json()\n        assert len(json[\"features\"]) == 100\n        for i in json[\"features\"]:",
         "detail": "test_api",
         "documentation": {}
     },
@@ -639,7 +725,7 @@
         "kind": 6,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "class TestUsers:\n    def test_get_current_user(self):\n        url = \"http://127.0.0.1:8000/users/me\"\n        headers = CaseInsensitiveDict()\n        headers[\"Accept\"] = \"application/json\"\n        headers[\n            \"Authorization\"\n        ] = \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ\"\n        resp = requests.get(url, headers=headers)\n        user = User(**resp.json())",
+        "peekOfCode": "class TestUsers:\n    def test_get_current_user(self):\n        headers = CaseInsensitiveDict()\n        headers[\"Accept\"] = \"application/json\"\n        headers[\n            \"Authorization\"\n        ] = \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaXJzdF9uYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJvcmdhbml6YXRpb24iOiJtaXlhbW90byIsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlfQ.T_o_eaOEir8ZnupZSKtmGn0k0nZPU3cIwtNVHA6Z-bQ\"\n        resp = client.get(\"/users/me\", headers=headers)\n        user = User(**resp.json())\n        assert resp.status_code == 200",
         "detail": "test_api",
         "documentation": {}
     },
@@ -648,7 +734,16 @@
         "kind": 2,
         "importPath": "test_api",
         "description": "test_api",
-        "peekOfCode": "def get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = get_request(\n            \"http://127.0.0.1:8000/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()",
+        "peekOfCode": "def get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = client.get(\n            \"/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200\n        json = response.json()",
+        "detail": "test_api",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "test_api",
+        "description": "test_api",
+        "peekOfCode": "client = TestClient(app)\ndef get_request(url):\n    response = requests.get(url)\n    return response\nclass TestMethods:\n    def test_geojson(self):\n        response = client.get(\n            \"/geojsonv2?start=0&limit=100&auth=KFoThxvRq35bLP8lieSnRQLagwU8usBUGw\"\n        )\n        assert response.status_code == 200",
         "detail": "test_api",
         "documentation": {}
     },
